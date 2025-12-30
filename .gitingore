@@ -1,0 +1,16 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code workspace files
+*.code-workspace
+
+# Node / JS build
+node_modules/
+dist/
+
+# Terraform files
+**/.terraform/
+**/terraform.tfstate
+**/terraform.tfstate.backup
+*.tfvars
