@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hunter Ulrich | Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Shader background -->
+  <shader-art autoplay dpr="1" role="img" tabindex="0" aria-label="Animated noise background">
+    <script type="buffer" name="position" data-size="2">
+      [-1, 1, -1,-1, 1,1, 1, 1, -1,-1, 1,-1]
+    </script>
+    <script type="buffer" name="uv" data-size="2">
+      [ 0, 0,  0, 1, 1,0, 1, 0,  0, 1, 1, 1]
+    </script>
+    <script type="vert">
+      #version 300 es
+      precision highp float;
+      in vec4 position;
+      in vec2 uv;
+      out vec2 vUv;
+      out vec4 vPosition;
+      void main() {
+        vUv = uv;
+        vPosition = position;
+        gl_Position = position;
+      }
+    </script>
+    <script type="frag">
+      #version 300 es
+      precision highp float;
+      in vec2 vUv;
+      in vec4 vPosition;
+      out vec4 fragColor;
+      uniform vec2 resolution;
+      uniform float time;
+
+      float noise(vec2 p) {
+        return 0.5 + 0.5 * (
+          sin(p.x * 0.5 + cos(p.y * 4. + 0.2 * cos(p.x * 2. + time * 0.05) + time * 0.05)) * 
+          cos(p.y * 0.7 + sin(p.x * 3. + 0.3 * cos(p.y * 2. + time * 0.05) + time * 0.05))
+        );
+      }
+
+      vec3 background() {
+        vec2 p0 = vPosition.xy;
+        float aspectRatio = resolution.x / resolution.y;
+        p0.x *= aspectRatio;
+        vec2 p = p0 * 0.8;
+
+        float n = (noise(p) + noise(p * 2.0) + noise(p * 5.0)) / 3.0;
+        n = n * sin(n * n * 23.0 + time * 0.02);
+        n = clamp(smoothstep(0.3, 0.35, n) - smoothstep(0.4, 0.45, n), 0.0, 1.0);
+
+        // Ocean-blue retro tone
+        return vec3(0.0, 0.47, 0.74) * n;
+      }
+
+      void main() {
+        fragColor = vec4(background(), 1.);
+      }
+    </script>
+  </shader-art>
+
+  <!-- Portfolio content -->
+  <div class="container">
+
+    <!-- Navigation -->
+    <nav class="top-right-nav">
+      <ul>
+        <li><a href="#hero" class="nav-link active">About</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero fade-in">
+      <div class="hero-container">
+        <img src="profile.jpg" alt="Hunter Ulrich" class="hero-img">
+        <div class="hero-text">
+          <h1 class="retro-heading">Hunter Ulrich</h1>
+          <p class="subtitle">Cybersecurity Student • Cloud & Full Stack Projects</p>
+          <p>I’m a cybersecurity student building cloud-based applications and full-stack projects using AWS, Python, JavaScript, SQL, and more. I enjoy solving problems, writing clean code, and learning the latest in cloud security and DevOps.</p>
+
+          <div class="skills-inline">
+            <span>Python</span>
+            <span>JavaScript</span>
+            <span>AWS</span>
+            <span>SQL</span>
+            <span>HTML & CSS</span>
+            <span>Git & GitHub</span>
+            <span>Linux</span>
+            <span>Cloud Security Basics</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <h2 class="section-title fade-in retro-heading">Projects</h2>
+
+      <div class="project-section fade-in">
+        <div class="project-content left">
+          <img src="imgs/fitness-tracker.png" alt="Fitness Tracker App Screenshot">
+          <div class="project-text">
+            <h3 class="retro-heading">Fitness Tracker App</h3>
+            <p class="project-tech">Python • AWS • RDS</p>
+            <p class="project-desc">
+              Developed a workout tracking application using Python to manage user input and app logic.
+              Designed and implemented a relational database hosted on AWS RDS for storing workouts and progress.
+              Implemented CRUD operations and ensured data security.
+            </p>
+            <a href="https://github.com/Lzybear22" target="_blank">View on GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-section fade-in">
+        <div class="project-content right">
+          <img src="imgs/weather-app.png" alt="Weather App Screenshot">
+          <div class="project-text">
+            <h3 class="retro-heading">Weather App</h3>
+            <p class="project-tech">JavaScript • API • Front-end</p>
+            <p class="project-desc">
+              Developed a dynamic weather application using JavaScript and Axios to fetch and display real-time weather data.
+              Created a responsive interface with DOM manipulation and handled multiple users simultaneously.
+            </p>
+            <a href="https://github.com/Lzybear22" target="_blank">View on GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section fade-in">
+      <h2 class="retro-heading">Contact</h2>
+      <p>Email: <a href="mailto:hulrich123@icloud.com">hulrich123@icloud.com</a></p>
+      <p>Phone: <a href="tel:7192433740">(719) 243-3740</a></p>
+      <p>LinkedIn: <a href="https://www.linkedin.com/in/hunter-ulrich-671573357" target="_blank">hunter-ulrich-671573357</a></p>
+      <p>GitHub: <a href="https://github.com/Lzybear22" target="_blank">Lzybear22</a></p>
+    </section>
+
+  </div>
+
+  <!-- ShaderArt JS -->
+  <script type="module">
+    import { ShaderArt } from 'https://cdn.skypack.dev/shader-art';
+    ShaderArt.register();
+  </script>
+  
+  <!-- Portfolio JS -->
+  <script src="script.js"></script>
+</body>
+</html>
