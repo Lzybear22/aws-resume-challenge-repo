@@ -1,16 +1,22 @@
-# OS files
-.DS_Store
-Thumbs.db
-
-# VS Code workspace files
-*.code-workspace
-
-# Node / JS build
+# Node modules
 node_modules/
-dist/
+npm-debug.log
 
-# Terraform files
-**/.terraform/
-**/terraform.tfstate
-**/terraform.tfstate.backup
-*.tfvars
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+*.tfplan
+
+# Logs
+*.log
+
+# Environment / Secrets
+.env
+*.pem
+*.key
+*.zip   # Lambda deployment package if it contains secrets
+
+# IDE / OS files
+.vscode/
+.DS_Store
