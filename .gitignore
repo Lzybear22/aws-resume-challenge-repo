@@ -1,0 +1,26 @@
+# Node.js dependencies (if any)
+node_modules/
+
+# Environment variables
+*.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Ignore Lambda build outputs
+lambda/chatbot.zip
+
+# Terraform state and cache files
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Local VSCode settings
+.vscode/
+
+.tfvars

@@ -1,0 +1,21 @@
+# Terraform state files
+*.tfstate
+*.tfstate.backup
+
+# Terraform plan files
+*.plan
+
+# Terraform cache directory
+.terraform/
+.terraform.lock.hcl
+
+# Crash logs
+crash.log
+
+# Lambda deployment packages
+lambda/chatbot.zip
+
+# Optional: local VSCode settings
+.vscode/
+
+.tfvars
