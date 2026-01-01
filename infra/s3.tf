@@ -1,3 +1,4 @@
+# Create S3 bucket for resume website
 resource "aws_s3_bucket" "Resume_Website" {
   bucket = "hunter-ulrich-io"
 
