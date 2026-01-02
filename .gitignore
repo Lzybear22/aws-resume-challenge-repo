@@ -24,3 +24,6 @@ lambda/chatbot.zip
 .vscode/
 
 .tfvars
+
+# Ignore config file with API URL
+/website/config.js

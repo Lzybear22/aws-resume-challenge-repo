@@ -48,31 +48,6 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.3 });
 projectCards.forEach(card => observer.observe(card));
 
-// Chatbot functionality
-const chatbotBtn = document.getElementById('chatbot-button');
-const chatbotModal = document.getElementById('chatbot-modal');
-const chatbotClose = document.getElementById('chatbot-close');
-const chatbotInput = document.getElementById('chatbot-input');
-const chatbotMessages = document.getElementById('chatbot-messages');
-
-chatbotBtn.addEventListener('click', () => { chatbotModal.style.display = 'flex'; });
-chatbotClose.addEventListener('click', () => { chatbotModal.style.display = 'none'; });
-
-// Simple echo chatbot for demo
-chatbotInput.addEventListener('keydown', e => {
-  if(e.key === 'Enter' && chatbotInput.value.trim() !== '') {
-    const msg = document.createElement('div');
-    msg.textContent = "You: " + chatbotInput.value;
-    chatbotMessages.appendChild(msg);
-
-    const reply = document.createElement('div');
-    reply.textContent = "Bot: I received \"" + chatbotInput.value + "\"";
-    chatbotMessages.appendChild(reply);
-
-    chatbotInput.value = '';
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-  }
-});
 // About section scroll animation
 const aboutSection = document.querySelector('.about-text');
 const aboutObserver = new IntersectionObserver(entries => {
@@ -84,3 +59,50 @@ const aboutObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.3 });
 
 aboutObserver.observe(aboutSection);
+
+// Chatbot input & messages
+const chatbotInputEl = document.getElementById("chatbot-input");
+const chatbotMessagesEl = document.getElementById("chatbot-messages");
+
+const API_URL = CONFIG.API_URL;
+
+// Send message on Enter
+chatbotInputEl.addEventListener("keydown", async (e) => {
+  if (e.key === "Enter" && chatbotInputEl.value.trim() !== "") {
+    const userMessage = chatbotInputEl.value;
+    
+    // Show user message
+    chatbotMessagesEl.innerHTML += `<div class="user-msg">You: ${userMessage}</div>`;
+    chatbotInputEl.value = "";
+
+    try {
+      // Call Lambda through API Gateway
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userMessage })
+      });
+
+      const data = await response.json();
+      const botReply = data.reply || "Hmm, I didn't get that.";
+
+      chatbotMessagesEl.innerHTML += `<div class="bot-msg">Bot: ${botReply}</div>`;
+      chatbotMessagesEl.scrollTop = chatbotMessagesEl.scrollHeight;
+    } catch (err) {
+      console.error("Error calling chatbot API:", err);
+      chatbotMessagesEl.innerHTML += `<div class="bot-msg">Error: Could not reach chatbot.</div>`;
+    }
+  }
+});
+//Chatbot modal open/close
+const chatbotBtn = document.getElementById('chatbot-button');
+const chatbotModal = document.getElementById('chatbot-modal');
+const chatbotClose = document.getElementById('chatbot-close');
+
+chatbotBtn.addEventListener('click', () => {
+  chatbotModal.style.display = 'flex';
+});
+
+chatbotClose.addEventListener('click', () => {
+  chatbotModal.style.display = 'none';
+});
