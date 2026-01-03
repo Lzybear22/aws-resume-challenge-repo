@@ -57,7 +57,6 @@ const aboutObserver = new IntersectionObserver(entries => {
     }
   });
 }, { threshold: 0.3 });
-
 aboutObserver.observe(aboutSection);
 
 // Chatbot input & messages
@@ -70,31 +69,35 @@ const API_URL = CONFIG.API_URL;
 chatbotInputEl.addEventListener("keydown", async (e) => {
   if (e.key === "Enter" && chatbotInputEl.value.trim() !== "") {
     const userMessage = chatbotInputEl.value;
-    
+
     // Show user message
     chatbotMessagesEl.innerHTML += `<div class="user-msg">You: ${userMessage}</div>`;
     chatbotInputEl.value = "";
 
     try {
-      // Call Lambda through API Gateway
+      // Call Lambda Function URL
       const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMessage })
       });
 
+      // Lambda Function URL already returns JSON directly
       const data = await response.json();
       const botReply = data.reply || "Hmm, I didn't get that.";
 
+      // Show bot reply
       chatbotMessagesEl.innerHTML += `<div class="bot-msg">Bot: ${botReply}</div>`;
       chatbotMessagesEl.scrollTop = chatbotMessagesEl.scrollHeight;
+
     } catch (err) {
       console.error("Error calling chatbot API:", err);
       chatbotMessagesEl.innerHTML += `<div class="bot-msg">Error: Could not reach chatbot.</div>`;
     }
   }
 });
-//Chatbot modal open/close
+
+// Chatbot modal open/close
 const chatbotBtn = document.getElementById('chatbot-button');
 const chatbotModal = document.getElementById('chatbot-modal');
 const chatbotClose = document.getElementById('chatbot-close');
