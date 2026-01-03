@@ -1,5 +1,7 @@
 variable "aws_profile" {
-  default = "hunter.test"
+  description = "AWS CLI profile name"
+  type        = string
+  default     = "hunter.test"
 }
 
 provider "aws" {
