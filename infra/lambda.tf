@@ -46,15 +46,3 @@ resource "aws_lambda_function" "chatbot" {
 
   depends_on = [aws_iam_role.lambda_exec]
 }
-
-# Permission for API Gateway to invoke Lambda
-resource "aws_lambda_permission" "allow_apigateway" {
-  statement_id  = "AllowAPIGatewayInvoke"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.chatbot.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.api_gateway_region}:${data.aws_caller_identity.current.account_id}:${var.api_gateway_id}/*/*"
-}
-
-# Get AWS account ID for source_arn
-data "aws_caller_identity" "current" {}
