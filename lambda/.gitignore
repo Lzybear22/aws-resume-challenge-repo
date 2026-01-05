@@ -1,10 +1,21 @@
-# Lambda deployment packages
+# AWS SAM
+.aws-sam/
+
+# Lambda
+node_modules/
 *.zip
 
-# Node.js dependencies (if you add them)
-node_modules/
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+crash.log
 
-# Environment files for Lambda
-*.env
-# AWS SAM build artifacts
-.aws-sam/
+# Environment files
+.env
+secrets.env
+
+# OS / Editor
+.vscode/
+.DS_Store

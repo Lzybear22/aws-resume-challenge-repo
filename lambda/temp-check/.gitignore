@@ -1,8 +1,0 @@
-# Lambda deployment packages
-*.zip
-
-# Node.js dependencies (if you add them)
-node_modules/
-
-# Environment files for Lambda
-*.env
