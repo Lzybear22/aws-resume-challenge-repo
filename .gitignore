@@ -27,3 +27,5 @@ lambda/chatbot.zip
 
 # Ignore config file with API URL
 /website/config.js
+# AWS SAM build artifacts
+.aws-sam/

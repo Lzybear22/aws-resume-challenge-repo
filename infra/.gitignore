@@ -21,3 +21,8 @@ lambda/chatbot.zip
 .tfvars
 
 secrets.tfvars
+
+# AWS SAM build artifacts
+.aws-sam/
+# Ignore config file with API URL
+/infra/config.js
