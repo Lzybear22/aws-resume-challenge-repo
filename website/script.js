@@ -196,3 +196,26 @@ chatbotBtn.addEventListener('click', () => {
 chatbotClose.addEventListener('click', () => {
   chatbotModal.style.display = 'none';
 });
+
+// Open chatbot modal when "Try it" is clicked
+const tryChatbotBtns = document.querySelectorAll('.open-chatbot');
+
+tryChatbotBtns.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    chatbotModal.style.display = 'flex';
+
+    // Only show welcome message if chat is empty
+    if (chatbotMessagesEl.innerHTML.trim() === "") {
+      chatbotMessagesEl.innerHTML += `
+        <div class="bot-msg">
+          <span class="msg-label">Chatbot</span>
+          <div class="msg-text">
+            Hi, my name is Chatbot. Type "help" to see available options.
+          </div>
+        </div>
+      `;
+      scrollChatToBottom();
+    }
+  });
+});
