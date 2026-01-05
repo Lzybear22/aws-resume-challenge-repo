@@ -29,7 +29,10 @@ jobs:
         run: sam build
 
       - name: Deploy SAM
-        run: sam deploy \
-          --no-confirm-changeset \
-          --stack-name my-portfolio-stack \
-          --capabilities CAPABILITY_IAM
+        run: |
+          sam deploy \
+            --stack-name my-portfolio-stack \
+            --capabilities CAPABILITY_IAM \
+            --no-confirm-changeset \
+            --no-fail-on-empty-changeset \
+            --resolve-s3
