@@ -62,37 +62,111 @@ aboutObserver.observe(aboutSection);
 // Chatbot input & messages
 const chatbotInputEl = document.getElementById("chatbot-input");
 const chatbotMessagesEl = document.getElementById("chatbot-messages");
-
 const API_URL = CONFIG.API_URL;
+
+// Scroll to bottom after adding a message
+function scrollChatToBottom() {
+  setTimeout(() => {
+    chatbotMessagesEl.scrollTop = chatbotMessagesEl.scrollHeight;
+  }, 50); // slight delay ensures DOM updates
+}
+
+// Format text to preserve line breaks inside bubbles
+function formatMessage(text) {
+  return text.replace(/\n/g, "<br>");
+}
+
+// Predefined local responses
+const LOCAL_RESPONSES = {
+  help: `Available commands:
+- resume : Get a link to my resume
+- skills : See my skills and tools
+- projects : Learn about my projects
+- email : Send me a message`,
+};
 
 // Send message on Enter
 chatbotInputEl.addEventListener("keydown", async (e) => {
   if (e.key === "Enter" && chatbotInputEl.value.trim() !== "") {
-    const userMessage = chatbotInputEl.value;
+    const userMessage = chatbotInputEl.value.trim();
+    const lowerMsg = userMessage.toLowerCase();
 
     // Show user message
-    chatbotMessagesEl.innerHTML += `<div class="user-msg">You: ${userMessage}</div>`;
+    chatbotMessagesEl.innerHTML += `
+      <div class="user-msg">
+        <span class="msg-label">You</span>
+        <div class="msg-text">${formatMessage(userMessage)}</div>
+      </div>
+    `;
     chatbotInputEl.value = "";
+    scrollChatToBottom();
 
-    try {
-      // Call Lambda Function URL
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage })
-      });
+    // Handle local responses first
+    // Handle local responses first
+if (LOCAL_RESPONSES[lowerMsg]) {
+  chatbotMessagesEl.innerHTML += `
+    <div class="bot-msg">
+      <span class="msg-label">Chatbot</span>
+      <div class="msg-text">${formatMessage(LOCAL_RESPONSES[lowerMsg])}</div>
+    </div>
+  `;
+  scrollChatToBottom();
+  return;
+}
 
-      // Lambda Function URL already returns JSON directly
+// For unrecognized commands, show error without calling Lambda
+const recognizedCommands = ["help", "resume", "skills", "projects", "email"];
+if (!recognizedCommands.includes(lowerMsg)) {
+  chatbotMessagesEl.innerHTML += `
+    <div class="bot-msg">
+      <span class="msg-label">Chatbot</span>
+      <div class="msg-text">
+        Oops! I couldn't understand that. <br>
+        Please use one of the available commands. <br>
+        Type "help" to see the list of commands.
+      </div>
+    </div>
+  `;
+  scrollChatToBottom();
+  return;
+}
+
+// Otherwise, call Lambda
+try {
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: userMessage }),
+  });
+
+
       const data = await response.json();
-      const botReply = data.reply || "Hmm, I didn't get that.";
+      let botReply = data.reply?.trim();
 
-      // Show bot reply
-      chatbotMessagesEl.innerHTML += `<div class="bot-msg">Bot: ${botReply}</div>`;
-      chatbotMessagesEl.scrollTop = chatbotMessagesEl.scrollHeight;
+      // If Lambda didn't return a reply, show friendly error
+      if (!botReply) {
+        botReply = `Oops! I couldn't understand that. 
+Please use one of the available commands. 
+Type "help" to see the list of commands.`;
+      }
+
+      chatbotMessagesEl.innerHTML += `
+        <div class="bot-msg">
+          <span class="msg-label">Chatbot</span>
+          <div class="msg-text">${formatMessage(botReply)}</div>
+        </div>
+      `;
+      scrollChatToBottom();
 
     } catch (err) {
       console.error("Error calling chatbot API:", err);
-      chatbotMessagesEl.innerHTML += `<div class="bot-msg">Error: Could not reach chatbot.</div>`;
+      chatbotMessagesEl.innerHTML += `
+        <div class="bot-msg">
+          <span class="msg-label">Chatbot</span>
+          <div class="msg-text">Error: Could not reach chatbot. Please try again later.</div>
+        </div>
+      `;
+      scrollChatToBottom();
     }
   }
 });
@@ -104,6 +178,19 @@ const chatbotClose = document.getElementById('chatbot-close');
 
 chatbotBtn.addEventListener('click', () => {
   chatbotModal.style.display = 'flex';
+
+  // Only show welcome message if chat is empty
+  if (chatbotMessagesEl.innerHTML.trim() === "") {
+    chatbotMessagesEl.innerHTML += `
+      <div class="bot-msg">
+        <span class="msg-label">Chatbot</span>
+        <div class="msg-text">
+          Hi, my name is Chatbot. Type "help" to see available options.
+        </div>
+      </div>
+    `;
+    scrollChatToBottom();
+  }
 });
 
 chatbotClose.addEventListener('click', () => {
