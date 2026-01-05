@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: My Serverless Chatbot
+
+Resources:
+  ChatbotFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: ChatbotFunction
+      Handler: chatbot.handler
+      Runtime: nodejs22.x
+      CodeUri: lambda/
+      Timeout: 10
+      Environment:
+        Variables:
+          CHATBOT_EMAIL: !Ref ChatbotEmail
+      Policies:
+        - AmazonSESFullAccess
+        - CloudWatchLogsFullAccess
+
+Parameters:
+  ChatbotEmail:
+    Type: String
+    Description: Verified email for chatbot contact
