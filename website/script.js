@@ -218,4 +218,4 @@ tryChatbotBtns.forEach(btn => {
       scrollChatToBottom();
     }
   });
-})
+});
