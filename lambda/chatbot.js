@@ -1,5 +1,5 @@
-const AWS = require("aws-sdk");
-const ses = new AWS.SES({ region: "us-west-2" });
+const { SNSClient, PublishCommand } = require('@aws-sdk/client-sns');
+const sns = new SNSClient({ region: 'us-east-1' });
 
 exports.handler = async (event) => {
 
