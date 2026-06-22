@@ -1,0 +1,33 @@
+name: Test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test-lambda-functions:
+    name: 'Test Lambda Functions'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Test Visitor Counter
+      run: |
+        cd visitor-counter
+        npm install
+        npm test
+    
+    - name: Test Chatbot
+      run: |
+        cd chatbot
+        npm install
+        npm test

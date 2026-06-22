@@ -3,213 +3,288 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hunter Ulrich - Cloud Engineer</title>
+  <title>Hunter Ulrich — Cloud Engineer</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Hero Section -->
-  <section id="hero" class="hero">
-    <div class="hero-text">
-      <h1>Hi, I'm Hunter Ulrich</h1>
-      <p>Cloud Engineer focused on AWS automation, Terraform, and building scalable solutions. Passionate about deploying efficient cloud architectures and continuous learning in the cloud space.</p>
-      <div class="links">
-        <a href="https://github.com/yourusername" target="_blank">GitHub</a>
-        <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
-      </div>
-      <!-- Hero Button -->
-      <a href="#projects" class="hero-button scroll-animate">Look at my Work <span class="arrow">↓</span></a>
-    </div>
-    <img src="images/me.JPEG" alt="Hunter Ulrich">
-    <div class="floating-shapes"></div>
-  </section>
-
   <!-- Navbar -->
   <header class="navbar">
-    <nav>
+    <nav class="nav-inner">
+      <span class="nav-logo">HU<span class="nav-dot">.</span></span>
       <ul>
         <li><a href="#hero">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#architecture">Architecture</a></li>
       </ul>
     </nav>
   </header>
 
-<!-- About Section -->
-<section id="about" class="about-section">
-  <div class="about-container">
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <canvas id="particle-canvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-eyebrow reveal-fade">
+        <span class="status-dot"></span>
+        <span>AWS Certified &mdash; Cloud Practitioner</span>
+      </div>
+      <h1 class="reveal-up">
+        <span class="hero-name">Hunter Ulrich</span><br>
+        <span class="hero-role-wrap">
+          <span id="typewriter"></span><span class="cursor">|</span>
+        </span>
+      </h1>
+      <p class="hero-subtitle reveal-up delay-1">Cloud Engineer building on AWS &mdash; infrastructure as code, serverless architecture, and CI/CD pipelines that work in production.</p>
+      <div class="hero-actions reveal-up delay-2">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="https://github.com/yourusername" target="_blank" class="btn-ghost">GitHub</a>
+        <a href="https://linkedin.com/in/yourusername" target="_blank" class="btn-ghost">LinkedIn</a>
+      </div>
+      <div class="hero-stack reveal-fade delay-3">
+        <span class="stack-label">Stack</span>
+        <div class="stack-tags">
+          <span>AWS</span><span>Terraform</span><span>Python</span><span>Lambda</span><span>DynamoDB</span><span>GitHub Actions</span>
+        </div>
+      </div>
 
-    <!-- Left Column: Text -->
-    <div class="about-text-wrapper">
-      <div class="about-text">
-        <h2>About Me</h2>
-        <p>Fully committed to life-long learning, I’m a Cloud Engineer passionate about AWS, Terraform, Python, and building scalable, automated cloud solutions. I thrive on creating infrastructure as code, serverless applications, and CI/CD pipelines that work in production.</p>
-        <p>When I’m not building cloud architectures, I enjoy spending my time with family, keeping fit, and playing some guitar.</p>
+      <!-- Visitor Counter -->
+      <div class="visitor-counter reveal-fade delay-3">
+        <span class="visitor-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </span>
+        <span id="visitor-count">—</span>
+        <span class="visitor-label">site visits</span>
       </div>
     </div>
+    <div class="hero-photo-wrap reveal-photo">
+      <div class="hero-photo-frame">
+        <img src="images/me.JPEG" alt="Hunter Ulrich">
+      </div>
+      <div class="hero-photo-accent"></div>
 
-  <!-- Skills Icons -->
-  <div class="skills">
-  <h3>Skills & Tools</h3>
-  <div class="skill-icons">
-    <div class="skill">
-      <img src="images/aws.svg" alt="AWS">
-      <span>AWS</span>
-    </div>
-    <div class="skill">
-      <img src="images/python.svg" alt="Python">
-      <span>Python</span>
-    </div>
-    <div class="skill">
-      <img src="images/terraform.svg" alt="Terraform">
-      <span>Terraform</span>
-    </div>
-    <div class="skill">
-      <img src="images/git.svg" alt="Git">
-      <span>Git</span>
-    </div>
-    <div class="skill">
-      <img src="images/dynamodb.svg" alt="DynamoDB">
-      <span>DynamoDB</span>
-    </div>
-    <div class="skill">
-      <img src="images/cloudfront.svg" alt="CloudFront">
-      <span>CloudFront</span>
-    </div>
-    <div class="skill">
-      <img src="images/iam.svg" alt="IAM">
-      <span>IAM</span>
-    </div>
-    <div class="skill">
-      <img src="images/apigateway.svg" alt="API Gateway">
-      <span>API Gateway</span>
-    </div>
-    <div class="skill">
-      <img src="images/cloudwatch.svg" alt="CloudWatch">
-      <span>CloudWatch</span>
-    </div>
-    <div class="skill">
-      <img src="images/lambda.svg" alt="Lambda">
-      <span>Lambda</span>
-    </div>
-    <div class="skill">
-      <img src="images/s3.svg" alt="S3">
-      <span>S3</span>
-    </div>
-    <div class="skill">
-      <img src="images/javascript.svg" alt="JavaScript">
-      <span>JavaScript</span>
-    </div>
-    <div class="skill">
-      <img src="images/html.svg" alt="HTML">
-      <span>HTML</span>
-    </div>
-    <div class="skill">
-      <img src="images/css.svg" alt="CSS">
-      <span>CSS</span>
-    </div>
-  </div>
-</div>
-
-</section>
-
-<!-- Projects Section -->
-<section id="projects" class="projects-section">
-  <h2>Projects</h2>
-  <div class="projects-container">
-
-    <!-- Portfolio Website Project -->
-    <div class="project-card">
-      <h3>Portfolio Website</h3>
-      <p>
-        My interactive resume website demonstrating cloud skills, CI/CD, and live backend logic.
-        Built with AWS S3, Lambda, API Gateway, CloudFront, and Terraform.
-        Features a live chatbot powered by serverless architecture.
-        Showcases responsive design, smooth scroll animations, and modern UI principles.
-      </p>
-      <div class="project-tech">
-        <img src="images/aws.svg" alt="AWS" title="AWS">
-        <img src="images/github.svg" alt="GitHub" title="GitHub">
-        <img src="images/git.svg" alt="Git" title="Git">
-        <img src="images/terraform.svg" alt="Terraform" title="Terraform">
-        <img src="images/s3.svg" alt="S3" title="S3">
-        <img src="images/iam.svg" alt="IAM" title="IAM">
-        <img src="images/lambda.svg" alt="Lambda" title="Lambda">
-        <img src="images/apigateway.svg" alt="API Gateway" title="API Gateway">
-        <img src="images/dynamodb.svg" alt="DynamoDB" title="DynamoDB">
-        <img src="images/cloudfront.svg" alt="CloudFront" title="CloudFront">
-        <img src="images/cloudwatch.svg" alt="CloudWatch" title="CloudWatch">
-        <img src="images/html.svg" alt="HTML" title="HTML">
-        <img src="images/css.svg" alt="CSS" title="CSS">
-        <img src="images/javascript.svg" alt="JavaScript" title="JavaScript">
+      <!-- Cert Badge -->
+      <div class="cert-badge" id="cert-badge">
+        <div class="cert-badge-icon">
+          <img src="https://images.credly.com/size/110x110/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png" alt="AWS Cloud Practitioner" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="cert-badge-fallback">CP</div>
+        </div>
+        <div class="cert-tooltip" id="cert-tooltip">
+          <p class="cert-tooltip-title">AWS Certified</p>
+          <p class="cert-tooltip-sub">Cloud Practitioner</p>
+          <p class="cert-tooltip-issuer">Amazon Web Services</p>
+          <a href="https://www.credly.com" target="_blank" class="cert-verify-link">Verify on Credly &rarr;</a>
+          <div class="cert-second-slot">
+            <span class="cert-coming-soon">+ Developer Associate <em>in progress</em></span>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- Chatbot Project -->
-    <div class="project-card">
-      <h3>Chatbot</h3>
-      <p>
-        A Lambda-powered chatbot accessed through API Gateway.
-        Can answer questions about my skills, resume, and more! Just try "Help".
-        Fully serverless and scalable with low latency responses.
-        Includes a web interface embedded in this portfolio for live interaction.
-        Continuously improving with new features and conversational abilities.
-      </p>
-      <div class="project-tech">
-        <img src="images/aws.svg" alt="AWS" title="AWS">
-        <img src="images/lambda.svg" alt="Lambda" title="Lambda">
-        <img src="images/apigateway.svg" alt="API Gateway" title="API Gateway">
-        <img src="images/javascript.svg" alt="JavaScript" title="JavaScript">
-        <img src="images/html.svg" alt="HTML" title="HTML">
-        <img src="images/css.svg" alt="CSS" title="CSS">
-        <img src="images/terraform.svg" alt="Terraform" title="Terraform">
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <div class="section-inner">
+      <div class="about-text scroll-reveal">
+        <p class="section-label">About</p>
+        <h2>Building cloud solutions<br>that scale.</h2>
+        <p class="about-body">I'm a cloud engineer focused on AWS, Terraform, and serverless architectures. I build infrastructure as code, automate deployments with CI/CD, and design systems that are reliable and cost-efficient.</p>
+        <p class="about-body">Outside of cloud work I spend time with family, stay active, and play guitar.</p>
       </div>
-      <div class="project-links">
-        <a href="#" class="open-chatbot">Try it</a>
-      </div>
-    </div>
-
-    <!-- Weather App Project -->
-    <div class="project-card">
-      <h3>Weather App</h3>
-      <p>
-        A weather application that shows real-time forecasts using API calls.
-        Provides hourly and weekly forecasts for any city.
-        Includes a user-friendly interface with responsive design.
-        Demonstrates working knowledge of JavaScript, HTML, CSS, and API integration.
-      </p>
-      <div class="project-tech">
-        <img src="images/github.svg" alt="GitHub" title="GitHub">
-        <img src="images/git.svg" alt="Git" title="Git">
-        <img src="images/html.svg" alt="HTML" title="HTML">
-        <img src="images/css.svg" alt="CSS" title="CSS">
-        <img src="images/javascript.svg" alt="JavaScript" title="JavaScript">
-      </div>
-      <div class="project-links">
-        <a href="https://github.com/Lzybear22/Weather-App.git" target="_blank">View</a>
+      <div class="skills-block scroll-reveal delay-1">
+        <p class="section-label">Skills &amp; Tools</p>
+        <div class="skill-grid">
+          <div class="skill skill-pop"><img src="images/aws.svg" alt="AWS"><span>AWS</span></div>
+          <div class="skill skill-pop"><img src="images/python.svg" alt="Python"><span>Python</span></div>
+          <div class="skill skill-pop"><img src="images/terraform.svg" alt="Terraform"><span>Terraform</span></div>
+          <div class="skill skill-pop"><img src="images/git.svg" alt="Git"><span>Git</span></div>
+          <div class="skill skill-pop"><img src="images/dynamodb.svg" alt="DynamoDB"><span>DynamoDB</span></div>
+          <div class="skill skill-pop"><img src="images/cloudfront.svg" alt="CloudFront"><span>CloudFront</span></div>
+          <div class="skill skill-pop"><img src="images/iam.svg" alt="IAM"><span>IAM</span></div>
+          <div class="skill skill-pop"><img src="images/apigateway.svg" alt="API Gateway"><span>API Gateway</span></div>
+          <div class="skill skill-pop"><img src="images/cloudwatch.svg" alt="CloudWatch"><span>CloudWatch</span></div>
+          <div class="skill skill-pop"><img src="images/lambda.svg" alt="Lambda"><span>Lambda</span></div>
+          <div class="skill skill-pop"><img src="images/s3.svg" alt="S3"><span>S3</span></div>
+          <div class="skill skill-pop"><img src="images/javascript.svg" alt="JavaScript"><span>JavaScript</span></div>
+          <div class="skill skill-pop"><img src="images/html.svg" alt="HTML"><span>HTML</span></div>
+          <div class="skill skill-pop"><img src="images/css.svg" alt="CSS"><span>CSS</span></div>
+        </div>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <!-- Projects Section -->
+  <section id="projects" class="projects-section">
+    <div class="section-inner">
+      <p class="section-label scroll-reveal">Projects</p>
+      <h2 class="projects-heading scroll-reveal">What I've built</h2>
+      <div class="projects-list">
 
-  <!-- Chatbot Button & Label -->
-  <button id="chatbot-button">💬</button>
-  <div id="chatbot-label">Try my chatbot <span class="arrow-right">→</span></div>
+        <div class="project-card scroll-reveal">
+          <div class="project-card-inner">
+            <div class="project-meta">
+              <span class="project-index mono-inline">01</span>
+              <span class="project-type">Cloud Resume Challenge</span>
+            </div>
+            <h3>Portfolio Website</h3>
+            <p>Full-stack cloud resume deployed on AWS. Static frontend on S3 + CloudFront, backend visitor counter via Lambda and API Gateway, all infrastructure provisioned with Terraform and deployed through GitHub Actions CI/CD.</p>
+            <div class="project-tech">
+              <img src="images/aws.svg" alt="AWS" title="AWS">
+              <img src="images/terraform.svg" alt="Terraform" title="Terraform">
+              <img src="images/s3.svg" alt="S3" title="S3">
+              <img src="images/lambda.svg" alt="Lambda" title="Lambda">
+              <img src="images/apigateway.svg" alt="API Gateway" title="API Gateway">
+              <img src="images/dynamodb.svg" alt="DynamoDB" title="DynamoDB">
+              <img src="images/cloudfront.svg" alt="CloudFront" title="CloudFront">
+              <img src="images/iam.svg" alt="IAM" title="IAM">
+              <img src="images/cloudwatch.svg" alt="CloudWatch" title="CloudWatch">
+              <img src="images/github.svg" alt="GitHub" title="GitHub">
+              <img src="images/html.svg" alt="HTML" title="HTML">
+              <img src="images/css.svg" alt="CSS" title="CSS">
+              <img src="images/javascript.svg" alt="JavaScript" title="JavaScript">
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card scroll-reveal delay-1">
+          <div class="project-card-inner">
+            <div class="project-meta">
+              <span class="project-index mono-inline">02</span>
+              <span class="project-type">Serverless</span>
+            </div>
+            <h3>Serverless Chatbot</h3>
+            <p>Lambda-powered chatbot exposed via API Gateway. Handles resume and skills queries with low-latency serverless responses. Embedded in this portfolio &mdash; type <span class="mono-inline">"help"</span> to explore.</p>
+            <div class="project-tech">
+              <img src="images/aws.svg" alt="AWS" title="AWS">
+              <img src="images/lambda.svg" alt="Lambda" title="Lambda">
+              <img src="images/apigateway.svg" alt="API Gateway" title="API Gateway">
+              <img src="images/terraform.svg" alt="Terraform" title="Terraform">
+              <img src="images/javascript.svg" alt="JavaScript" title="JavaScript">
+              <img src="images/html.svg" alt="HTML" title="HTML">
+              <img src="images/css.svg" alt="CSS" title="CSS">
+            </div>
+            <div class="project-links">
+              <a href="#" class="open-chatbot btn-outline-small">Try it live &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card scroll-reveal delay-2">
+          <div class="project-card-inner">
+            <div class="project-meta">
+              <span class="project-index mono-inline">03</span>
+              <span class="project-type">Frontend / API</span>
+            </div>
+            <h3>Weather App</h3>
+            <p>Real-time weather application with hourly and weekly forecasts for any city. Demonstrates JavaScript API integration, responsive UI design, and clean data presentation.</p>
+            <div class="project-tech">
+              <img src="images/javascript.svg" alt="JavaScript" title="JavaScript">
+              <img src="images/html.svg" alt="HTML" title="HTML">
+              <img src="images/css.svg" alt="CSS" title="CSS">
+              <img src="images/github.svg" alt="GitHub" title="GitHub">
+              <img src="images/git.svg" alt="Git" title="Git">
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Lzybear22/Weather-App.git" target="_blank" class="btn-outline-small">View on GitHub &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture Section -->
+  <section id="architecture" class="arch-section">
+    <div class="section-inner">
+      <p class="section-label scroll-reveal">Under the Hood</p>
+      <h2 class="arch-heading scroll-reveal">How this site is built</h2>
+      <p class="arch-subtitle scroll-reveal">Click any service to learn what it does and why I chose it.</p>
+      <div class="arch-diagram scroll-reveal" id="arch-diagram">
+
+        <!-- User -->
+        <div class="arch-node" data-node="user" style="grid-area:user">
+          <div class="arch-node-icon">👤</div>
+          <span>You</span>
+        </div>
+
+        <!-- CloudFront -->
+        <div class="arch-node" data-node="cloudfront" style="grid-area:cf">
+          <div class="arch-node-icon"><img src="images/cloudfront.svg" alt=""></div>
+          <span>CloudFront</span>
+        </div>
+
+        <!-- S3 -->
+        <div class="arch-node" data-node="s3" style="grid-area:s3">
+          <div class="arch-node-icon"><img src="images/s3.svg" alt=""></div>
+          <span>S3</span>
+        </div>
+
+        <!-- API Gateway -->
+        <div class="arch-node" data-node="apigw" style="grid-area:apigw">
+          <div class="arch-node-icon"><img src="images/apigateway.svg" alt=""></div>
+          <span>API Gateway</span>
+        </div>
+
+        <!-- Lambda -->
+        <div class="arch-node" data-node="lambda" style="grid-area:lambda">
+          <div class="arch-node-icon"><img src="images/lambda.svg" alt=""></div>
+          <span>Lambda</span>
+        </div>
+
+        <!-- DynamoDB -->
+        <div class="arch-node" data-node="dynamo" style="grid-area:dynamo">
+          <div class="arch-node-icon"><img src="images/dynamodb.svg" alt=""></div>
+          <span>DynamoDB</span>
+        </div>
+
+        <!-- GitHub Actions -->
+        <div class="arch-node" data-node="gha" style="grid-area:gha">
+          <div class="arch-node-icon"><img src="images/github.svg" alt=""></div>
+          <span>GitHub Actions</span>
+        </div>
+
+        <!-- Terraform -->
+        <div class="arch-node" data-node="terraform" style="grid-area:tf">
+          <div class="arch-node-icon"><img src="images/terraform.svg" alt=""></div>
+          <span>Terraform</span>
+        </div>
+
+        <!-- SVG connector lines -->
+        <svg class="arch-lines" id="arch-lines" aria-hidden="true"></svg>
+      </div>
+
+      <!-- Info panel -->
+      <div class="arch-info-panel" id="arch-info-panel">
+        <p class="arch-info-placeholder">Click a service above to learn about it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chatbot Button -->
+  <div class="chatbot-pulse-ring"></div>
+  <button id="chatbot-button" aria-label="Open chatbot">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+  </button>
+  <div id="chatbot-label">Try the chatbot <span class="arrow-right">&#8594;</span></div>
 
   <!-- Chatbot Modal -->
-  <div id="chatbot-modal" class="chatbot-modal">
+  <div id="chatbot-modal" class="chatbot-modal" role="dialog" aria-label="Chat with Hunter's bot">
     <div class="chatbot-header">
-      <span>Chat with me!</span>
-      <button id="chatbot-close">✖</button>
+      <div class="chatbot-header-left">
+        <span class="chatbot-status-dot"></span>
+        <span>Chatbot</span>
+      </div>
+      <button id="chatbot-close" aria-label="Close chatbot">&#x2715;</button>
     </div>
     <div class="chatbot-body">
       <div id="chatbot-messages"></div>
-      <input type="text" id="chatbot-input" placeholder="Type your message...">
+      <div class="chatbot-input-row">
+        <input type="text" id="chatbot-input" placeholder='Type "help" to start...'>
+      </div>
     </div>
   </div>
-
   <script src="config.js"></script>
   <script src="script.js"></script>
 </body>

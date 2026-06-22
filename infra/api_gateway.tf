@@ -1,15 +1,18 @@
 # HTTP API Gateway
 resource "aws_apigatewayv2_api" "chatbot_api" {
-  name          = "chatbot_api"
+  name          = "${var.project_name}-chatbot-api"
   protocol_type = "HTTP"
 
-  #CORS Configuration
-  cors_configuration {
-  allow_origins = ["*"] # Make cloudfront domain next
-  allow_methods = ["POST", "OPTIONS"]
-  allow_headers = ["content-type"]
-}
+  # CORS Configuration - SECURE (FREE)
+  # cors_configuration {
+  #   allow_origins = ["https://${aws_cloudfront_distribution.resume_site.domain_name}"]
+  #   allow_methods = ["POST", "OPTIONS"]
+  #   allow_headers = ["content-type"]
+  # }
 
+  tags = merge(local.common_tags, {
+    Name = "chatbot-api"
+  })
 }
 
 # Lambda integration
@@ -32,6 +35,8 @@ resource "aws_apigatewayv2_stage" "prod" {
   api_id      = aws_apigatewayv2_api.chatbot_api.id
   name        = "prod"
   auto_deploy = true
+
+  tags = local.common_tags
 }
 
 # Permissions for API Gateway to invoke Lambda
@@ -41,9 +46,4 @@ resource "aws_lambda_permission" "allow_apigateway" {
   function_name = aws_lambda_function.chatbot.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.chatbot_api.execution_arn}/*/*"
-}
-
-# Output the API Gateway endpoint
-output "chatbot_api_url" {
-  value = "${aws_apigatewayv2_api.chatbot_api.api_endpoint}/prod/chatbot"
 }

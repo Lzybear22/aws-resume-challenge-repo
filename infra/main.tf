@@ -1,3 +1,4 @@
+# main.tf
 variable "aws_profile" {
   description = "AWS CLI profile name"
   type        = string
@@ -5,6 +6,6 @@ variable "aws_profile" {
 }
 
 provider "aws" {
-  region  = "us-west-2"
+  region  = var.aws_region
   profile = var.aws_profile
 }

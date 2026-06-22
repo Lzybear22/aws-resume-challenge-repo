@@ -20,9 +20,11 @@ lambda/chatbot.zip
 
 .tfvars
 
-secrets.tfvars
+terraform.tfvars
 
 # AWS SAM build artifacts
 .aws-sam/
 # Ignore config file with API URL
 config.js
+
+terraformbackups/
