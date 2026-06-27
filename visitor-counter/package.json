@@ -1,0 +1,16 @@
+{
+  "name": "visitor-counter",
+  "version": "1.0.0",
+  "description": "Lambda function to count website visitors",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'No tests yet' && exit 0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.0.0",
+    "@aws-sdk/lib-dynamodb": "^3.0.0"
+  },
+  "keywords": ["aws", "lambda", "dynamodb", "visitor-counter"],
+  "author": "Your Name",
+  "license": "MIT"
+}
