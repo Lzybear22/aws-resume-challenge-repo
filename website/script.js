@@ -208,7 +208,10 @@ function scrollToBottom() { setTimeout(() => { chatbotMsgs.scrollTop = chatbotMs
 function formatMsg(text) { return text.replace(/\n/g, '<br>'); }
 function addMsg(role, text) {
   const cls = role==='user'?'user-msg':'bot-msg', label=role==='user'?'You':'Chatbot';
-  chatbotMsgs.innerHTML += `<div class="${cls}"><span class="msg-label">${label}</span><div class="msg-text">${formatMsg(text)}</div></div>`;
+  const div = document.createElement('div');
+  div.className = cls;
+  div.innerHTML = `<span class="msg-label">${label}</span><div class="msg-text">${formatMsg(text)}</div>`;
+  chatbotMsgs.appendChild(div);
   scrollToBottom();
 }
 

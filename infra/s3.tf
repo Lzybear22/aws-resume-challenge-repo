@@ -61,6 +61,17 @@ resource "aws_s3_object" "script" {
   tags = local.common_tags
 }
 
+# Upload resume PDF
+resource "aws_s3_object" "resume" {
+  bucket       = aws_s3_bucket.resume_website.id
+  key          = "resume.pdf"
+  source       = "../website/resume.pdf"
+  content_type = "application/pdf"
+  etag         = filemd5("../website/resume.pdf")
+
+  tags = local.common_tags
+}
+
 # Upload config.js
 resource "aws_s3_object" "config_js" {
   bucket       = aws_s3_bucket.resume_website.id

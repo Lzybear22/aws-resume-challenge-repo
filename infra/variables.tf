@@ -1,3 +1,15 @@
+variable "domain_name" {
+  description = "Your domain name"
+  type        = string
+  default     = "hunterulrich.io"
+}
+
+variable "aws_profile" {
+  description = "AWS CLI profile name"
+  type        = string
+  default     = "hunter.test"
+}
+
 variable "aws_region" {
   description = "AWS region for resources"
   type        = string

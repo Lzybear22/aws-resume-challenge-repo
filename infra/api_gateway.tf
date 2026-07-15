@@ -3,13 +3,6 @@ resource "aws_apigatewayv2_api" "chatbot_api" {
   name          = "${var.project_name}-chatbot-api"
   protocol_type = "HTTP"
 
-  # CORS Configuration - SECURE (FREE)
-  # cors_configuration {
-  #   allow_origins = ["https://${aws_cloudfront_distribution.resume_site.domain_name}"]
-  #   allow_methods = ["POST", "OPTIONS"]
-  #   allow_headers = ["content-type"]
-  # }
-
   tags = merge(local.common_tags, {
     Name = "chatbot-api"
   })

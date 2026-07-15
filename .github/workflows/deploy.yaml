@@ -44,7 +44,7 @@ jobs:
     
     - name: Install Node.js dependencies (Chatbot)
       run: |
-        cd ../chatbot
+        cd ../lambda
         npm install
         cd ../infra
     
@@ -124,8 +124,8 @@ jobs:
     
     - name: Sync website files to S3
       run: |
-        aws s3 sync ./website/ s3://hunter-ulrich-io-testadmin
+        aws s3 sync ./website/ s3://${{ secrets.S3_BUCKET_NAME }}
     
     - name: Invalidate CloudFront
       run: |
-        aws cloudfront create-invalidation --distribution-id E21I9786C02MSX --paths "/*"
+        aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
