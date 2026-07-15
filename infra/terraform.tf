@@ -8,10 +8,10 @@ terraform {
     }
   }
   
-  # Uncomment and configure when ready for remote state
   # backend "s3" {
-  #   bucket = "your-terraform-state-bucket"
-  #   key    = "resume-website/terraform.tfstate"
-  #   region = "us-west-2"
+  #   bucket  = "hunter-ulrich-tf-state"
+  #   key     = "resume-website/terraform.tfstate"
+  #   region  = "us-west-2"
+  #   profile = "TestAdmin"
   # }
 }
