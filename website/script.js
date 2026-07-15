@@ -40,7 +40,7 @@
   const el = document.getElementById('visitor-count');
   const COUNTER_URL = typeof CONFIG !== 'undefined' && CONFIG.COUNTER_URL ? CONFIG.COUNTER_URL : '';
   if (!COUNTER_URL) { el.textContent = '—'; return; }
-  fetch(COUNTER_URL, { method: 'POST' })
+  fetch(COUNTER_URL, { method: 'GET' })
     .then(r => r.json())
     .then(data => {
       const count = data.count || data.visitor_count || data.visits || 0;

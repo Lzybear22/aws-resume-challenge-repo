@@ -771,7 +771,20 @@ body {
   .hero-photo-accent { width: 240px; height: 240px; }
   .about-section .section-inner { grid-template-columns: 1fr; gap: 50px; }
   .skill-grid { grid-template-columns: repeat(4, 1fr); }
+  .project-card { width: 100%; }
   .project-card-inner { padding: 24px 20px; }
+  .arch-diagram {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      ". user ."
+      "gha cf s3"
+      "tf apigw lambda"
+      ". dynamo .";
+    max-width: 100%;
+    width: 100%;
+  }
+  .arch-info-panel { max-width: 100%; width: 100%; }
+  .arch-section .section-inner { padding: 80px 5%; }
 }
 @media (max-width: 600px) {
   .skill-grid { grid-template-columns: repeat(3, 1fr); }
@@ -779,6 +792,25 @@ body {
   #chatbot-button { bottom: 24px; right: 24px; }
   .chatbot-pulse-ring { bottom: 24px; right: 24px; }
   #chatbot-label { right: 88px; bottom: 37px; }
+  .project-card { width: 100%; }
+  .project-card-inner { padding: 20px 16px; }
+  .section-inner { padding: 60px 4%; }
+  .arch-section .section-inner { overflow: hidden; }
+  .arch-diagram {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "user user"
+      "gha tf"
+      "cf s3"
+      "apigw lambda"
+      "dynamo dynamo";
+    max-width: 100%;
+    width: 100%;
+    gap: 10px;
+    padding: 10px 0 20px;
+  }
+  .arch-node { padding: 12px 6px; }
+  .arch-info-panel { max-width: 100%; width: 100%; margin-top: 10px; }
 }
 
 
@@ -937,6 +969,8 @@ body {
   position: relative;
   padding: 20px 0 40px;
   max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
 }
 .arch-node {
   display: flex;
@@ -992,6 +1026,9 @@ body {
   border-radius: var(--radius-md);
   padding: 20px 24px;
   max-width: 760px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   transition: border-color 0.25s ease;
 }
 .arch-info-panel.active { border-color: var(--accent); }
