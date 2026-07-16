@@ -10,8 +10,9 @@ resource "aws_cloudfront_origin_access_identity" "oai" {
 
 # CloudFront Distribution
 resource "aws_cloudfront_distribution" "resume_site" {
-  enabled = true
-  comment = "CloudFront distribution for resume website"
+  enabled             = true
+  comment             = "CloudFront distribution for resume website"
+  aliases             = [var.domain_name, "www.${var.domain_name}"]
 
   # Origin: S3 Static Site
   origin {
@@ -122,9 +123,10 @@ resource "aws_cloudfront_distribution" "resume_site" {
     response_page_path = "/index.html"
   }
 
-  # Default CloudFront certificate (swap for ACM cert once domain is purchased)
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn      = aws_acm_certificate.ssl_certificate.arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 
   default_root_object = "index.html"

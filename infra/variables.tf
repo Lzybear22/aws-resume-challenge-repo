@@ -1,7 +1,7 @@
 variable "domain_name" {
   description = "Your domain name"
   type        = string
-  default     = "hunterulrich.io"
+  default     = "hunterulrich.dev"
 }
 
 variable "aws_profile" {
