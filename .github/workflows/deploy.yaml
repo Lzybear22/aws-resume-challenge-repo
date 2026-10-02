@@ -35,6 +35,13 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
+
+    - name: Create config.js
+      run: |
+        echo "const CONFIG = {" > ../website/config.js
+        echo "    API_URL: '${{ secrets.API_URL }}'," >> ../website/config.js
+        echo "    COUNTER_URL: '${{ secrets.COUNTER_URL }}'" >> ../website/config.js
+        echo "};" >> ../website/config.js
     
     - name: Install Node.js dependencies (Visitor Counter)
       run: |
