@@ -116,7 +116,7 @@ jobs:
     
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false
+      run: terraform apply -auto-approve -input=false -var="bucket_name=${{ secrets.S3_BUCKET_NAME }}" -var="environment=production" -var="project_name=resume-website"
 
   deploy-website:
     name: 'Deploy Website Files'
