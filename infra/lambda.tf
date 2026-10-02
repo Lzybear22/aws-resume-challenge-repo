@@ -98,7 +98,7 @@ data "archive_file" "visitor_counter_zip" {
   type        = "zip"
   source_dir  = "${path.module}/../visitor-counter"
   output_path = "${path.module}/../lambda/visitor-counter.zip"
-  excludes    = ["node_modules", "package-lock.json", ".git"]
+  excludes    = ["package-lock.json", ".git"]
 }
 
 # Visitor Counter Lambda Function
@@ -192,7 +192,7 @@ resource "aws_api_gateway_integration_response" "visitor_options_integration_res
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
     "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
-    "method.response.header.Access-Control-Allow-Origin"  = "'https://d2uj2m1tmcf0dw.cloudfront.net'"
+    "method.response.header.Access-Control-Allow-Origin"  = "'https://hunterulrich.dev'"
   }
 }
 

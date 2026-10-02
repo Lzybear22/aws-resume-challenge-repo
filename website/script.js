@@ -24,7 +24,7 @@
 // TYPEWRITER
 (function () {
   const el = document.getElementById('typewriter');
-  const roles = ['Cloud Engineer','AWS Architect','Terraform Builder','DevOps Enthusiast'];
+  const roles = ['Cloud Engineering Student','AWS Builder','Terraform Builder','DevOps Enthusiast'];
   let ri=0, ci=0, deleting=false;
   function tick() {
     const word = roles[ri];
@@ -120,7 +120,7 @@ const NODE_INFO = {
   },
   lambda: {
     title: 'AWS Lambda',
-    body: 'Python functions that run on-demand. One handles the visitor counter (read + write DynamoDB), another handles chatbot responses. Zero cost when idle, scales automatically under load.'
+    body: 'JavaScript functions that run on demand. One handles the visitor counter (reads and writes DynamoDB), the other handles chatbot replies. They cost nothing when idle and scale automatically.'
   },
   dynamo: {
     title: 'Amazon DynamoDB',

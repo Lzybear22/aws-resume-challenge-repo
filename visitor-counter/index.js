@@ -8,7 +8,7 @@ const TABLE_NAME = process.env.DYNAMODB_TABLE_NAME;
 
 const CORS_HEADERS = {
   'Content-Type': 'application/json',
-  'Access-Control-Allow-Origin': 'https://d2uj2m1tmcf0dw.cloudfront.net',
+  'Access-Control-Allow-Origin': 'https://hunterulrich.dev',
   'Access-Control-Allow-Headers': 'Content-Type',
   'Access-Control-Allow-Methods': 'GET, OPTIONS'
 };

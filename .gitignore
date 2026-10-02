@@ -29,3 +29,5 @@ lambda/chatbot.zip
 /website/config.js
 # AWS SAM build artifacts
 .aws-sam/
+
+CLAUDE.md
