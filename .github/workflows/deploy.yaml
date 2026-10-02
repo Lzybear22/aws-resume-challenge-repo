@@ -47,6 +47,12 @@ jobs:
         cd ../lambda
         npm install
         cd ../infra
+
+    - name: Create Chatbot Lambda ZIP
+      run: |
+        cd ../lambda
+        zip -r chatbot.zip . -x "*.zip"
+        cd ../infra
     
     - name: Terraform Format
       id: fmt

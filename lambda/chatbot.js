@@ -1,3 +1,6 @@
+const { SESClient, SendEmailCommand } = require('@aws-sdk/client-ses');
+const ses = new SESClient({ region: 'us-east-1' });
+
 exports.handler = async (event) => {
 
   if (event.httpMethod === 'OPTIONS') {
@@ -30,15 +33,36 @@ exports.handler = async (event) => {
   } else if (msg.includes('resume')) {
     reply = 'You can view my resume here: <a href="/resume.pdf" target="_blank">Open Resume</a>';
   } else if (msg.includes('skills')) {
-    reply = 'I work with AWS, Terraform, DynamoDB, Lambda, API Gateway, S3, CloudFront, JavaScript';
+    reply = 'I work with AWS, Terraform, Python, DynamoDB, Lambda, API Gateway, S3, CloudFront, JavaScript';
   } else if (msg.includes('projects')) {
     reply = 'Check out my projects section on my website!';
 
-  } else if (msg === 'email' || msg === 'contact' || msg === 'contact me') {
-    reply = 'You can reach me here: <a href="mailto:hulrich123@icloud.com?subject=Portfolio Contact" target="_blank">Send me an email</a>';
+  } else if (msg.startsWith('contact me:')) {
+    const parts = userMessage.split('|');
+    if (parts.length === 2) {
+      const senderEmail = parts[0].replace('contact me:', '').trim();
+      const messageContent = parts[1].trim();
+
+      try {
+        await ses.send(new SendEmailCommand({
+          Destination: { ToAddresses: [process.env.CHATBOT_EMAIL] },
+          Message: {
+            Body: { Text: { Data: `From: ${senderEmail}\n\nMessage:\n${messageContent}` } },
+            Subject: { Data: 'New message from chatbot' }
+          },
+          Source: process.env.CHATBOT_EMAIL
+        }));
+        reply = "Your message was sent successfully! I'll get back to you soon.";
+      } catch (err) {
+        console.error('Error sending email:', err);
+        reply = 'Oops! Something went wrong sending your message.';
+      }
+    } else {
+      reply = 'Please use this format:\ncontact me: yourname@example.com | Your message here';
+    }
 
   } else if (msg) {
-    reply = 'Echo: ' + userMessage;
+    reply = 'You can reach me here: <a href="mailto:hulrich123@icloud.com?subject=Portfolio Contact" target="_blank">Send me an email</a>';
   }
 
   return {
