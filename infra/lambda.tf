@@ -34,14 +34,7 @@ resource "aws_lambda_function" "chatbot" {
   source_code_hash = filebase64sha256("../lambda/chatbot.zip")
   memory_size     = 128
   timeout         = 10
-
-  environment {
-    variables = {
-      ENV_VAR_1 = var.env_var_1
-      ENV_VAR_2 = var.env_var_2
-    }
-  }
-
+  
   tags = merge(local.common_tags, {
     Name = "chatbot-function"
   })
