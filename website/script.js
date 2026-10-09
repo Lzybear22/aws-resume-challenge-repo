@@ -35,6 +35,41 @@
   setTimeout(tick, 900);
 })();
 
+// DEPLOY STATUS
+(function () {
+  const el = document.getElementById('deploy-status');
+  const dot = el.querySelector('.status-dot');
+  const label = el.querySelector('.visitor-label');
+  const RUNS_URL = 'https://api.github.com/repos/Lzybear22/aws-resume-challenge-repo/actions/workflows/deploy.yaml/runs?branch=main&event=push&per_page=1';
+  const fmt = d => new Date(d).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+
+  function show(text, state, title) {
+    label.textContent = text;
+    if (state) dot.classList.add(state);
+    el.title = title;
+    el.style.display = '';
+  }
+
+  // fallback: deploy time written into config.js by GitHub Actions
+  function fallback() {
+    if (typeof CONFIG === 'undefined' || !CONFIG.LAST_DEPLOY || isNaN(new Date(CONFIG.LAST_DEPLOY))) return;
+    show('Last deployed ' + fmt(CONFIG.LAST_DEPLOY), '',
+      'Deployed by GitHub Actions' + (CONFIG.COMMIT ? ' (commit ' + CONFIG.COMMIT + ')' : ''));
+  }
+
+  fetch(RUNS_URL)
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => {
+      const run = data.workflow_runs && data.workflow_runs[0];
+      if (!run) return fallback();
+      const title = 'GitHub Actions run for commit ' + run.head_sha.slice(0, 7);
+      if (run.status !== 'completed') show('Deploying now...', 'is-running', title);
+      else if (run.conclusion === 'success') show('Last deployed ' + fmt(run.updated_at), '', title);
+      else show('Last deploy failed ' + fmt(run.updated_at), 'is-failed', title);
+    })
+    .catch(fallback);
+})();
+
 // VISITOR COUNTER
 (function () {
   const el = document.getElementById('visitor-count');

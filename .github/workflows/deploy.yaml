@@ -44,7 +44,9 @@ jobs:
       run: |
         echo "const CONFIG = {" > ../website/config.js
         echo "    API_URL: '${{ secrets.API_URL }}'," >> ../website/config.js
-        echo "    COUNTER_URL: '${{ secrets.COUNTER_URL }}'" >> ../website/config.js
+        echo "    COUNTER_URL: '${{ secrets.COUNTER_URL }}'," >> ../website/config.js
+        echo "    LAST_DEPLOY: '$(date -u +%Y-%m-%dT%H:%M:%SZ)'," >> ../website/config.js
+        echo "    COMMIT: '${GITHUB_SHA::7}'" >> ../website/config.js
         echo "};" >> ../website/config.js
     
     - name: Install Node.js dependencies (Visitor Counter)
