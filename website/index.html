@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hunter Ulrich — Cloud Portfolio</title>
+  <title>Hunter Ulrich | Cloud Portfolio</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
@@ -28,7 +28,7 @@
     <div class="hero-content">
       <div class="hero-eyebrow reveal-fade">
         <span class="status-dot"></span>
-        <span>AWS Certified &mdash; Cloud Practitioner</span>
+        <span>AWS Certified Cloud Practitioner</span>
       </div>
       <h1 class="reveal-up">
         <span class="hero-name">Hunter Ulrich</span><br>
@@ -36,7 +36,7 @@
           <span id="typewriter"></span><span class="cursor">|</span>
         </span>
       </h1>
-      <p class="hero-subtitle reveal-up delay-1">Software Engineering student at BYU-Idaho learning cloud infrastructure on AWS &mdash; Terraform, serverless, and CI/CD with GitHub Actions. Looking for cloud engineering internships.</p>
+      <p class="hero-subtitle reveal-up delay-1">I'm a Software Engineering student at BYU-Idaho. I'm learning cloud by building real projects on AWS, and I'm looking for a cloud engineering internship.</p>
       <div class="hero-actions reveal-up delay-2">
         <a href="#projects" class="btn-primary">View Projects</a>
         <a href="/resume.pdf" target="_blank" class="btn-primary">Resume</a>
@@ -55,7 +55,7 @@
         <span class="visitor-icon">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         </span>
-        <span id="visitor-count">—</span>
+        <span id="visitor-count">...</span>
         <span class="visitor-label">site visits</span>
       </div>
 
@@ -81,7 +81,7 @@
           <p class="cert-tooltip-title">AWS Certified</p>
           <p class="cert-tooltip-sub">Cloud Practitioner</p>
           <p class="cert-tooltip-issuer">Amazon Web Services</p>
-          <a href="https://www.credly.com" target="_blank" class="cert-verify-link">Verify on Credly &rarr;</a>
+          <a href="https://www.credly.com/badges/70def49d-8be2-41bb-8f21-019f831b213b/public_url" target="_blank" class="cert-verify-link">Verify on Credly &rarr;</a>
           <div class="cert-second-slot">
             <span class="cert-coming-soon">+ Developer Associate <em>in progress</em></span>
           </div>
@@ -95,9 +95,9 @@
     <div class="section-inner">
       <div class="about-text scroll-reveal">
         <p class="section-label">About</p>
-        <h2>Learning cloud<br>by building.</h2>
-        <p class="about-body">I'm a Software Engineering student at BYU-Idaho focused on cloud infrastructure. This site is my main project: I set up the AWS resources with Terraform, wrote the Lambda functions, and deploy changes through GitHub Actions.</p>
-        <p class="about-body">Outside of cloud work I spend time with family, stay active, and play guitar.</p>
+        <h2>Hey, I'm Hunter.</h2>
+        <p class="about-body">I'm studying Software Engineering at BYU-Idaho, and the part I like most is cloud infrastructure. This website is my biggest project so far. I set up everything on AWS with Terraform, wrote the Lambda functions, and it deploys itself through GitHub Actions whenever I push a change.</p>
+        <p class="about-body">Outside of school and coding, I like spending time with my family, staying active, and playing guitar.</p>
       </div>
       <div class="skills-block scroll-reveal delay-1">
         <p class="section-label">Skills &amp; Tools</p>
@@ -134,7 +134,7 @@
               <span class="project-type">Cloud Resume Challenge</span>
             </div>
             <h3>Portfolio Website</h3>
-            <p>Full-stack cloud resume deployed on AWS. Static frontend on S3 + CloudFront, backend visitor counter via Lambda and API Gateway, all infrastructure provisioned with Terraform and deployed through GitHub Actions CI/CD.</p>
+            <p>The site you're looking at. The files live in S3 and are served through CloudFront. The visitor counter calls a Lambda function through API Gateway, which updates a count in DynamoDB. Everything is set up with Terraform, and GitHub Actions deploys it when I push changes.</p>
             <div class="project-tech">
               <img src="images/aws.svg" alt="AWS" title="AWS">
               <img src="images/terraform.svg" alt="Terraform" title="Terraform">
@@ -160,7 +160,7 @@
               <span class="project-type">Serverless</span>
             </div>
             <h3>Serverless Chatbot</h3>
-            <p>Lambda-powered chatbot exposed via API Gateway. Handles resume and skills queries with low-latency serverless responses. Embedded in this portfolio &mdash; type <span class="mono-inline">"help"</span> to explore.</p>
+            <p>A simple chatbot that runs on Lambda behind API Gateway. It answers questions about my resume, skills, and projects. You can try it on this page: open the chat in the corner and type <span class="mono-inline">"help"</span>.</p>
             <div class="project-tech">
               <img src="images/aws.svg" alt="AWS" title="AWS">
               <img src="images/lambda.svg" alt="Lambda" title="Lambda">
@@ -183,7 +183,7 @@
               <span class="project-type">Frontend / API</span>
             </div>
             <h3>Weather App</h3>
-            <p>Real-time weather application with hourly and weekly forecasts for any city. Demonstrates JavaScript API integration, responsive UI design, and clean data presentation.</p>
+            <p>A weather app I built with JavaScript. You search for a city and it shows the current weather plus hourly and weekly forecasts, pulled from a weather API.</p>
             <div class="project-tech">
               <img src="images/javascript.svg" alt="JavaScript" title="JavaScript">
               <img src="images/html.svg" alt="HTML" title="HTML">
@@ -204,9 +204,9 @@
   <!-- Architecture Section -->
   <section id="architecture" class="arch-section">
     <div class="section-inner">
-      <p class="section-label scroll-reveal">Under the Hood</p>
+      <p class="section-label scroll-reveal">How It Works</p>
       <h2 class="arch-heading scroll-reveal">How this site is built</h2>
-      <p class="arch-subtitle scroll-reveal">Click any service to learn what it does and why I chose it.</p>
+      <p class="arch-subtitle scroll-reveal">Click on a service to see what it does for this site.</p>
       <div class="arch-diagram scroll-reveal" id="arch-diagram">
 
         <!-- User -->
@@ -263,7 +263,7 @@
 
       <!-- Info panel -->
       <div class="arch-info-panel" id="arch-info-panel">
-        <p class="arch-info-placeholder">Click a service above to learn about it.</p>
+        <p class="arch-info-placeholder">Click a service above to see what it does.</p>
       </div>
     </div>
   </section>

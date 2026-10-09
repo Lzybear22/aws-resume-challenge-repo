@@ -24,7 +24,7 @@
 // TYPEWRITER
 (function () {
   const el = document.getElementById('typewriter');
-  const roles = ['Cloud Engineering Student','AWS Builder','Terraform Builder','DevOps Enthusiast'];
+  const roles = ['Cloud Engineering Student','Building on AWS','Writing Terraform'];
   let ri=0, ci=0, deleting=false;
   function tick() {
     const word = roles[ri];
@@ -74,7 +74,7 @@
 (function () {
   const el = document.getElementById('visitor-count');
   const COUNTER_URL = typeof CONFIG !== 'undefined' && CONFIG.COUNTER_URL ? CONFIG.COUNTER_URL : '';
-  if (!COUNTER_URL) { el.textContent = '—'; return; }
+  if (!COUNTER_URL) { el.textContent = '...'; return; }
   fetch(COUNTER_URL, { method: 'GET' })
     .then(r => r.json())
     .then(data => {
@@ -89,7 +89,7 @@
         if (current >= target) clearInterval(timer);
       }, 30);
     })
-    .catch(() => { el.textContent = '—'; });
+    .catch(() => { el.textContent = '...'; });
 })();
 
 // NAVBAR
@@ -138,36 +138,36 @@ if (skillGrid) {
 // ARCHITECTURE DIAGRAM
 const NODE_INFO = {
   user: {
-    title: 'Visitor',
-    body: 'You! Every request starts here. Your browser resolves the domain via DNS, which points to a CloudFront distribution serving the site globally.'
+    title: 'You',
+    body: 'That\'s you. When you go to hunterulrich.dev, DNS sends your browser to CloudFront.'
   },
   cloudfront: {
     title: 'Amazon CloudFront',
-    body: 'AWS\'s global CDN with 400+ edge locations. Serves the static site with low latency worldwide, handles HTTPS termination, and caches assets so S3 is rarely hit directly.'
+    body: 'AWS\'s content delivery network. It serves the site over HTTPS and caches the files in locations around the world so the pages load fast.'
   },
   s3: {
     title: 'Amazon S3',
-    body: 'Stores all the static files — HTML, CSS, JS, images. S3 is never exposed publicly; CloudFront is the only origin. Costs cents per month for a static site.'
+    body: 'Holds the site\'s files: HTML, CSS, JavaScript, and images. The bucket isn\'t public. Only CloudFront can read from it.'
   },
   apigw: {
     title: 'Amazon API Gateway',
-    body: 'The HTTP endpoint that the frontend calls for the visitor counter and chatbot. Provides a stable public URL, handles CORS, and routes requests to Lambda — no server needed.'
+    body: 'Gives the site a URL to call for the visitor counter and the chatbot. It handles CORS and passes each request to Lambda, so I don\'t need to run a server.'
   },
   lambda: {
     title: 'AWS Lambda',
-    body: 'JavaScript functions that run on demand. One handles the visitor counter (reads and writes DynamoDB), the other handles chatbot replies. They cost nothing when idle and scale automatically.'
+    body: 'Two small JavaScript functions. One updates the visitor count in DynamoDB, and the other answers chatbot messages. They only run when someone uses them, so they cost almost nothing.'
   },
   dynamo: {
     title: 'Amazon DynamoDB',
-    body: 'Serverless NoSQL database storing the visitor count. Single-digit millisecond reads/writes, no infrastructure to manage, and the free tier covers this workload entirely.'
+    body: 'A NoSQL database that stores the visitor count. It\'s one small table, and there\'s no server for me to manage.'
   },
   gha: {
     title: 'GitHub Actions',
-    body: 'CI/CD pipeline that runs on every git push. Syncs updated files to S3 and invalidates the CloudFront cache automatically — no manual deploys ever needed.'
+    body: 'Runs every time I push to main. It runs Terraform, uploads the site files to S3, and clears the CloudFront cache so changes show up right away. It signs in to AWS with OIDC, so no AWS keys are stored in GitHub.'
   },
   terraform: {
     title: 'Terraform',
-    body: 'Every AWS resource — S3 bucket, CloudFront distribution, Lambda functions, API Gateway, DynamoDB table, IAM roles — is defined as code. Infrastructure is reproducible, version-controlled, and destroyable in one command.'
+    body: 'Every AWS resource for this site is written in Terraform: the S3 bucket, CloudFront, the Lambda functions, API Gateway, DynamoDB, and the IAM roles. I can see each change before it happens, and the whole setup is saved in Git.'
   }
 };
 
@@ -250,7 +250,7 @@ function addMsg(role, text) {
   scrollToBottom();
 }
 
-const LOCAL_RESPONSES = { help: `Available commands:\n- resume   — get my resume link\n- skills   — see my skills\n- projects — learn about my projects\n- email    — send me a message` };
+const LOCAL_RESPONSES = { help: `Here's what you can type:\n- resume: get my resume\n- skills: see what I work with\n- projects: hear about my projects\n- email: send me a message` };
 const RECOGNIZED = new Set(['help','resume','skills','projects','email']);
 
 chatbotInput.addEventListener('keydown', async e => {
@@ -264,7 +264,7 @@ chatbotInput.addEventListener('keydown', async e => {
     const res = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:raw}) });
     const data = await res.json();
     addMsg('bot', data.reply?.trim() || 'No response received.');
-  } catch { addMsg('bot', 'Could not reach the server. Please try again later.'); }
+  } catch { addMsg('bot', 'I couldn\'t reach the chatbot right now. Try again in a bit.'); }
 });
 
 function openChatbot() {

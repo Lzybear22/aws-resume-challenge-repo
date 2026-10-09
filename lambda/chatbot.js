@@ -23,7 +23,7 @@ exports.handler = async (event) => {
   let reply = "Sorry, I don't understand that yet.";
 
   if (msg === '' || msg === 'hello' || msg === 'hi') {
-    reply = "Hello! Welcome to my chatbot! Type 'help' to see available commands.";
+    reply = "Hey! Type 'help' to see what you can ask me.";
   } else if (msg === 'help') {
     reply = `Here are some commands you can try:
 - 'resume' → Get a link to my resume
@@ -33,9 +33,9 @@ exports.handler = async (event) => {
   } else if (msg.includes('resume')) {
     reply = 'You can view my resume here: <a href="/resume.pdf" target="_blank">Open Resume</a>';
   } else if (msg.includes('skills')) {
-    reply = 'I work with AWS, Terraform, Python, DynamoDB, Lambda, API Gateway, S3, CloudFront, JavaScript';
+    reply = 'I work with AWS (S3, CloudFront, Lambda, API Gateway, DynamoDB), Terraform, GitHub Actions, and JavaScript.';
   } else if (msg.includes('projects')) {
-    reply = 'Check out my projects section on my website!';
+    reply = "Scroll up to the Projects section to see what I've built.";
 
   } else if (msg.startsWith('contact me:')) {
     const parts = userMessage.split('|');
@@ -55,7 +55,7 @@ exports.handler = async (event) => {
         reply = "Your message was sent successfully! I'll get back to you soon.";
       } catch (err) {
         console.error('Error sending email:', err);
-        reply = 'Oops! Something went wrong sending your message.';
+        reply = "Something went wrong and your message didn't send. You can email me instead.";
       }
     } else {
       reply = 'Please use this format:\ncontact me: yourname@example.com | Your message here';
