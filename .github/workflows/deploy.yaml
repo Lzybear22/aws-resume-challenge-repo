@@ -49,6 +49,11 @@ jobs:
         echo "    COMMIT: '${GITHUB_SHA::7}'" >> ../website/config.js
         echo "};" >> ../website/config.js
     
+    - name: Check Lambda code
+      run: |
+        node --check ../lambda/chatbot.js
+        node --check ../visitor-counter/index.js
+
     - name: Install Node.js dependencies (Visitor Counter)
       run: |
         cd ../visitor-counter
@@ -147,3 +152,12 @@ jobs:
     - name: Invalidate CloudFront
       run: |
         aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+
+    - name: Smoke test live site
+      run: |
+        curl -sf https://hunterulrich.dev/ | grep -q "Hunter Ulrich"
+        echo "Website is up"
+        curl -sf "${{ secrets.COUNTER_URL }}?peek=1" | grep -q '"count"'
+        echo "Visitor counter API works"
+        curl -sf -X POST -H "Content-Type: application/json" -d '{"message":"skills"}' "${{ secrets.API_URL }}" | grep -q '"reply"'
+        echo "Chatbot API works"

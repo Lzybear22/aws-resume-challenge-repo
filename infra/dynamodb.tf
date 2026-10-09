@@ -9,6 +9,12 @@ resource "aws_dynamodb_table" "visitor_counter" {
     type = "S"  # String
   }
 
+  # Hashed visitor records delete themselves after a day
+  ttl {
+    attribute_name = "ttl"
+    enabled        = true
+  }
+
   tags = {
     Name        = "Visitor Counter"
     Environment = "production"

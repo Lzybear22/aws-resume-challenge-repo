@@ -18,6 +18,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -264,6 +265,46 @@
       <!-- Info panel -->
       <div class="arch-info-panel" id="arch-info-panel">
         <p class="arch-info-placeholder">Click a service above to see what it does.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What I've Learned Section -->
+  <section id="learned" class="projects-section">
+    <div class="section-inner">
+      <p class="section-label scroll-reveal">Notes</p>
+      <h2 class="projects-heading scroll-reveal">What I've learned</h2>
+      <div class="projects-list">
+
+        <div class="project-card scroll-reveal">
+          <div class="project-card-inner">
+            <h3>Getting rid of AWS keys in GitHub</h3>
+            <p>My pipeline used to sign in to AWS with access keys saved as GitHub secrets. Those keys never expire, so if they leaked someone could use my account. I switched to OIDC. Now each GitHub Actions run gets temporary credentials from an IAM role that only my repo can use, and there are no AWS keys stored in GitHub at all.</p>
+          </div>
+        </div>
+
+        <div class="project-card scroll-reveal delay-1">
+          <div class="project-card-inner">
+            <h3>The time my pipeline tried to rebuild everything</h3>
+            <p>When I moved my Terraform state to S3, the real state file was still on my laptop. The first CI run saw an empty state and tried to create every resource again. Most of it failed with "already exists," but it did make a few duplicate APIs and a certificate. I deleted the duplicates, uploaded the real state, and ran terraform plan to make sure it only showed small changes before letting CI deploy again. Now I always check where my state lives before I change a pipeline.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="section-inner">
+      <p class="section-label scroll-reveal">Contact</p>
+      <h2 class="projects-heading scroll-reveal">Get in touch</h2>
+      <p class="contact-text scroll-reveal">I'm looking for a cloud engineering internship. If you have a question or an opportunity, send me an email or message me on LinkedIn.</p>
+      <div class="hero-actions scroll-reveal">
+        <a href="mailto:hulrich123@icloud.com" class="btn-primary">Email me</a>
+        <a href="https://www.linkedin.com/in/hunter-ulrich-671573357" target="_blank" class="btn-ghost">LinkedIn</a>
+        <a href="https://github.com/Lzybear22" target="_blank" class="btn-ghost">GitHub</a>
+        <a href="/resume.pdf" target="_blank" class="btn-ghost">Resume</a>
       </div>
     </div>
   </section>

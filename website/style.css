@@ -370,6 +370,19 @@ body {
   margin-bottom: 14px;
 }
 
+/* CONTACT SECTION */
+.contact-section {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+}
+.contact-section .projects-heading { margin-bottom: 16px; }
+.contact-text {
+  color: var(--text-muted);
+  max-width: 600px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
 /*ABOUT SECTION */
 .about-section {
   background: var(--bg-surface);
