@@ -8,10 +8,9 @@ terraform {
     }
   }
 
-  # backend "s3" {
-  #   bucket  = "hunter-ulrich-tf-state"
-  #   key     = "resume-website/terraform.tfstate"
-  #   region  = "us-west-2"
-  #   profile = "TestAdmin"
-  # }
+  backend "s3" {
+    bucket  = "hunter-ulrich-tf-state"
+    key     = "resume-website/terraform.tfstate"
+    region  = "us-west-2"
+  }
 }

@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ main, master ]
 
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
 env:
   AWS_REGION: us-west-2
   TF_VERSION: 1.14.3
@@ -32,8 +37,7 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        role-to-assume: arn:aws:iam::593857178529:role/github-actions-deploy
         aws-region: ${{ env.AWS_REGION }}
 
     - name: Create config.js
@@ -131,8 +135,7 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        role-to-assume: arn:aws:iam::593857178529:role/github-actions-deploy
         aws-region: ${{ env.AWS_REGION }}
     
     - name: Sync website files to S3
