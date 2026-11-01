@@ -19,6 +19,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#simulator">Simulator</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
@@ -272,6 +273,71 @@
       <!-- Info panel -->
       <div class="arch-info-panel" id="arch-info-panel">
         <p class="arch-info-placeholder">Click a service above to see what it does.</p>
+      </div>
+      <p class="arch-sim-link scroll-reveal"><a href="#simulator">What happens when one of these breaks? Try the failure simulator &darr;</a></p>
+    </div>
+  </section>
+
+  <!-- Failure Simulator Section -->
+  <section id="simulator" class="sim-section">
+    <div class="section-inner">
+      <p class="section-label scroll-reveal">Failure Simulator</p>
+      <h2 class="projects-heading scroll-reveal">What if my cloud broke?</h2>
+      <p class="sim-intro scroll-reveal">Pick a failure and watch how it would affect this site, how I'd notice it, and how I'd fix it. This runs entirely in your browser. Nothing real breaks, and the numbers are illustrative.</p>
+
+      <div class="sim-controls scroll-reveal">
+        <label class="sim-select-wrap">
+          <span class="sim-select-label">Failure</span>
+          <select id="sim-scenario">
+            <option value="s3">S3 storage outage</option>
+            <option value="deploy">Failed deployment</option>
+            <option value="denied">Access denied (403)</option>
+            <option value="counter">Visitor counter failure</option>
+            <option value="spike">Traffic spike</option>
+          </select>
+        </label>
+        <div class="sim-buttons">
+          <button type="button" id="sim-run" class="sim-btn sim-btn-danger">Simulate failure</button>
+          <button type="button" id="sim-reset" class="sim-btn sim-btn-ghost" disabled>Reset</button>
+        </div>
+      </div>
+
+      <div class="sim-dashboard scroll-reveal" id="sim-dashboard">
+        <div class="sim-banner" id="sim-banner" aria-live="polite">
+          <span class="sim-banner-icon" aria-hidden="true"></span>
+          <span class="sim-banner-text"></span>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-panel">
+            <p class="sim-panel-title">Services</p>
+            <div class="sim-nodes" id="sim-nodes"></div>
+          </div>
+          <div class="sim-panel">
+            <p class="sim-panel-title">Simulated metrics</p>
+            <div class="sim-metrics" id="sim-metrics"></div>
+          </div>
+        </div>
+
+        <div class="sim-panel">
+          <p class="sim-panel-title">Event log</p>
+          <div class="sim-log" id="sim-log" aria-live="polite"></div>
+        </div>
+
+        <div class="sim-panel sim-explain" id="sim-explain" hidden>
+          <div class="sim-tabs" role="tablist" id="sim-tabs">
+            <button type="button" role="tab" data-tab="cause" class="active">Cause</button>
+            <button type="button" role="tab" data-tab="impact">Impact</button>
+            <button type="button" role="tab" data-tab="detect">Detection</button>
+            <button type="button" role="tab" data-tab="recover">Recovery</button>
+          </div>
+          <div class="sim-tab-body" id="sim-tab-body"></div>
+        </div>
+
+        <div class="sim-footer" id="sim-footer" hidden>
+          <button type="button" id="sim-recover" class="sim-btn sim-btn-ok">Recover system</button>
+          <p class="sim-footer-status" id="sim-footer-status" aria-live="polite"></p>
+        </div>
       </div>
     </div>
   </section>
