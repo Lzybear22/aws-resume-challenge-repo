@@ -769,66 +769,6 @@ body {
 }
 #chatbot-input:focus { border-color: var(--accent); }
 
-/*RESPONSIVE*/
-@media (max-width: 900px) {
-  .hero {
-    flex-direction: column;
-    padding: 120px 8% 80px;
-    gap: 50px;
-    text-align: center;
-    align-items: center;
-  }
-  .hero-content { max-width: 100%; }
-  .hero-eyebrow { justify-content: center; }
-  .hero-actions { justify-content: center; }
-  .hero-stack { flex-direction: column; align-items: center; }
-  .hero-photo-frame { width: 240px; height: 240px; }
-  .hero-photo-accent { width: 240px; height: 240px; }
-  .about-section .section-inner { grid-template-columns: 1fr; gap: 50px; }
-  .skill-grid { grid-template-columns: repeat(4, 1fr); }
-  .project-card { width: 100%; }
-  .project-card-inner { padding: 24px 20px; }
-  .arch-diagram {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas:
-      ". user ."
-      "gha cf s3"
-      "tf apigw lambda"
-      ". dynamo .";
-    max-width: 100%;
-    width: 100%;
-  }
-  .arch-info-panel { max-width: 100%; width: 100%; }
-  .arch-section .section-inner { padding: 80px 5%; }
-}
-@media (max-width: 600px) {
-  .skill-grid { grid-template-columns: repeat(3, 1fr); }
-  .chatbot-modal { width: calc(100vw - 20px); right: 10px; bottom: 100px; }
-  #chatbot-button { bottom: 24px; right: 24px; }
-  .chatbot-pulse-ring { bottom: 24px; right: 24px; }
-  #chatbot-label { right: 88px; bottom: 37px; }
-  .project-card { width: 100%; }
-  .project-card-inner { padding: 20px 16px; }
-  .section-inner { padding: 60px 4%; }
-  .arch-section .section-inner { overflow: hidden; }
-  .arch-diagram {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas:
-      "user user"
-      "gha tf"
-      "cf s3"
-      "apigw lambda"
-      "dynamo dynamo";
-    max-width: 100%;
-    width: 100%;
-    gap: 10px;
-    padding: 10px 0 20px;
-  }
-  .arch-node { padding: 12px 6px; }
-  .arch-info-panel { max-width: 100%; width: 100%; margin-top: 10px; }
-}
-
-
 /*VISITOR COUNTER */
 .visitor-counter {
   display: inline-flex;
@@ -1064,4 +1004,198 @@ body {
   font-size: 0.95rem;
   color: var(--text-secondary);
   line-height: 1.7;
+}
+
+/* MOBILE NAV TOGGLE (hidden on desktop) */
+.nav-toggle {
+  display: none;
+  position: relative;
+  width: 38px;
+  height: 34px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.nav-toggle span {
+  position: absolute;
+  left: 10px;
+  width: 16px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.25s ease, opacity 0.2s ease, top 0.25s ease;
+}
+.nav-toggle span:nth-child(1) { top: 10px; }
+.nav-toggle span:nth-child(2) { top: 15.5px; }
+.nav-toggle span:nth-child(3) { top: 21px; }
+.navbar.menu-open .nav-toggle span:nth-child(1) { top: 15.5px; transform: rotate(45deg); }
+.navbar.menu-open .nav-toggle span:nth-child(2) { opacity: 0; }
+.navbar.menu-open .nav-toggle span:nth-child(3) { top: 15.5px; transform: rotate(-45deg); }
+
+/* Per-node description, only shown in the mobile accordion layout */
+.arch-node-desc { display: none; }
+
+/*RESPONSIVE*/
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+    padding: 120px 8% 80px;
+    gap: 50px;
+    text-align: center;
+    align-items: center;
+  }
+  .hero-content { max-width: 100%; }
+  .hero-eyebrow { justify-content: center; }
+  .hero-actions { justify-content: center; }
+  .hero-stack { flex-direction: column; align-items: center; }
+  .hero-photo-frame { width: 240px; height: 240px; }
+  .hero-photo-accent { width: 240px; height: 240px; }
+  .about-section .section-inner { grid-template-columns: 1fr; gap: 50px; }
+  .skill-grid { grid-template-columns: repeat(4, 1fr); }
+  .project-card { width: 100%; }
+  .project-card-inner { padding: 24px 20px; }
+  .arch-diagram {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "gha user ."
+      "s3 cf tf"
+      ". apigw lambda"
+      ". . dynamo";
+    max-width: 100%;
+    width: 100%;
+  }
+  .arch-info-panel { max-width: 100%; width: 100%; }
+  .arch-section .section-inner { padding: 80px 5%; }
+}
+@media (max-width: 700px) {
+  .nav-toggle { display: block; }
+  .navbar.menu-open {
+    background: rgba(13, 17, 23, 0.98);
+    border-bottom: 1px solid var(--border);
+  }
+  .navbar nav ul {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 4px 5% 14px;
+    background: rgba(13, 17, 23, 0.98);
+    border-bottom: 1px solid var(--border);
+  }
+  .navbar.menu-open nav ul { display: flex; }
+  .navbar nav ul li a {
+    display: block;
+    padding: 12px 0;
+    font-size: 1rem;
+  }
+  .navbar nav ul li a::after { display: none; }
+  .navbar nav ul li a.active { color: var(--accent); }
+}
+@media (max-width: 600px) {
+  .skill-grid { grid-template-columns: repeat(3, 1fr); }
+  .chatbot-modal {
+    width: calc(100vw - 20px);
+    right: 10px;
+    bottom: 90px;
+    height: min(520px, calc(100vh - 110px));
+    height: min(520px, calc(100dvh - 110px));
+  }
+  /* 16px stops iOS Safari from zooming in when the input is focused */
+  #chatbot-input { font-size: 16px; }
+  #chatbot-button { bottom: 24px; right: 24px; }
+  .chatbot-pulse-ring { bottom: 24px; right: 24px; }
+  #chatbot-label { right: 88px; bottom: 37px; }
+  /* once the page is scrolled, hide the label so it doesn't sit on top of text */
+  .navbar.fixed-top ~ #chatbot-label { display: none; }
+  .project-card { width: 100%; }
+  .project-card-inner { padding: 20px 16px; }
+  .section-inner { padding: 60px 4%; }
+
+  /* Architecture: vertical list, tap a service to expand its description */
+  .arch-subtitle { margin-bottom: 20px; }
+  .arch-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 480px;
+    padding: 28px 0 8px;
+  }
+  .arch-lines { display: none; }
+  .arch-node {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+  .arch-node:hover, .arch-node.active { transform: none; }
+  .arch-node-icon { width: 28px; height: 28px; flex-shrink: 0; }
+  .arch-node-icon img { width: 26px; height: 26px; }
+  .arch-node span {
+    flex: 1;
+    font-size: 0.82rem;
+    text-align: left;
+    color: var(--text-primary);
+  }
+  /* chevron */
+  .arch-node::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    margin: 0 4px 3px 0;
+    border-right: 1.5px solid var(--text-muted);
+    border-bottom: 1.5px solid var(--text-muted);
+    transform: rotate(45deg);
+    transition: transform 0.25s ease, border-color 0.2s ease;
+  }
+  .arch-node.active::after {
+    transform: rotate(-135deg);
+    margin-bottom: -3px;
+    border-color: var(--accent);
+  }
+  /* dashed connector between services */
+  .arch-node + .arch-node::before {
+    content: '';
+    position: absolute;
+    left: 27px;
+    top: -15px;
+    height: 14px;
+    border-left: 1.5px dashed var(--border-light);
+  }
+  /* group labels */
+  .arch-node[data-node="user"]::before,
+  .arch-node[data-node="gha"]::before {
+    position: absolute;
+    left: 2px;
+    top: -24px;
+    height: auto;
+    border: 0;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .arch-node[data-node="user"]::before { content: 'When you visit the site'; }
+  .arch-node[data-node="gha"]::before { content: 'How it gets deployed'; }
+  .arch-node[data-node="gha"] { margin-top: 24px; }
+  .arch-node.active .arch-node-desc {
+    display: block;
+    order: 1;
+    flex-basis: 100%;
+    margin-top: 2px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    user-select: text;
+    cursor: auto;
+  }
+  .arch-info-panel { display: none; }
 }

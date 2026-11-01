@@ -109,6 +109,17 @@ window.addEventListener('scroll', () => {
   });
 });
 
+// MOBILE MENU
+const navToggle = document.querySelector('.nav-toggle');
+function setMenu(open) {
+  navbar.classList.toggle('menu-open', open);
+  navToggle.setAttribute('aria-expanded', open);
+  navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+}
+navToggle.addEventListener('click', () => setMenu(!navbar.classList.contains('menu-open')));
+navLinks.forEach(l => l.addEventListener('click', () => setMenu(false)));
+document.addEventListener('click', e => { if (!navbar.contains(e.target)) setMenu(false); });
+
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
     const href = link.getAttribute('href');
@@ -213,11 +224,24 @@ window.addEventListener('load', drawArchLines);
 window.addEventListener('resize', drawArchLines);
 
 const infoPanel = document.getElementById('arch-info-panel');
+// On phones the diagram becomes a tap-to-expand list (see style.css)
+const archMobile = window.matchMedia('(max-width: 600px)');
 document.querySelectorAll('.arch-node').forEach(node => {
-  node.addEventListener('click', () => {
+  const info = NODE_INFO[node.dataset.node];
+  if (info) {
+    const desc = document.createElement('p');
+    desc.className = 'arch-node-desc';
+    desc.textContent = info.body;
+    node.appendChild(desc);
+  }
+  node.addEventListener('click', e => {
     const key = node.dataset.node;
     const info = NODE_INFO[key];
     if (!info) return;
+    if (archMobile.matches && node.classList.contains('active')) {
+      if (!e.target.closest('.arch-node-desc')) node.classList.remove('active');
+      return;
+    }
     document.querySelectorAll('.arch-node').forEach(n => n.classList.remove('active'));
     node.classList.add('active');
     infoPanel.classList.add('active');
