@@ -224,7 +224,7 @@ window.addEventListener('load', drawArchLines);
 window.addEventListener('resize', drawArchLines);
 
 const infoPanel = document.getElementById('arch-info-panel');
-// On phones the diagram becomes a tap-to-expand list (see style.css)
+// mobile: tap a service to expand it
 const archMobile = window.matchMedia('(max-width: 600px)');
 document.querySelectorAll('.arch-node').forEach(node => {
   const info = NODE_INFO[node.dataset.node];
@@ -298,8 +298,7 @@ function openChatbot() {
 chatbotBtn.addEventListener('click', openChatbot);
 chatbotClose.addEventListener('click', () => { chatbotModal.style.display='none'; });
 document.querySelectorAll('.open-chatbot').forEach(btn => btn.addEventListener('click', e => { e.preventDefault(); openChatbot(); }));
-// FAILURE SIMULATOR
-// Everything here is a scripted simulation in the browser. It doesn't call AWS.
+// FAILURE SIMULATOR (fake data, doesn't touch AWS)
 (function () {
   const runBtn = document.getElementById('sim-run');
   if (!runBtn) return;
@@ -349,7 +348,7 @@ document.querySelectorAll('.open-chatbot').forEach(btn => btn.addEventListener('
       ],
       cause: '<p>The bucket that holds this site\'s HTML, CSS, JavaScript, images and resume stops answering. That could be an S3 problem in <code>us-west-2</code>, or the bucket being deleted or emptied by mistake. CloudFront itself is fine, but it can\'t fetch anything new from its origin.</p>',
       impact: '<p>CloudFront keeps copies of my files at edge locations for up to 24 hours (<code>default_ttl = 86400</code> in my Terraform). Anything already cached near you keeps loading. Anything that isn\'t, like an expired file or a page nobody nearby has requested yet, comes back as a 5xx error.</p><p>The visitor counter and chatbot keep working because they go through API Gateway and Lambda, not S3.</p><p>The worst time for this outage is right after a deploy: my pipeline clears the whole CloudFront cache (<code>/*</code>), so there\'s nothing left to serve.</p>',
-      detect: '<ul><li><strong>CloudWatch:</strong> CloudFront\'s <code>5xxErrorRate</code> metric. This is the first thing I\'d put an alarm on.</li><li><strong>AWS Health Dashboard:</strong> shows whether S3 has a known issue in my region.</li><li><strong>Response headers:</strong> <code>x-cache: Hit from cloudfront</code> vs <code>Error from cloudfront</code> tells you whether a file came from the cache or failed at the origin.</li><li><strong>Pipeline smoke test:</strong> the curl of the homepage would fail on the next deploy.</li></ul>',
+      detect: '<ul><li><strong>CloudWatch:</strong> CloudFront\'s <code>5xxErrorRate</code> metric. I have an alarm on it that emails me through SNS.</li><li><strong>AWS Health Dashboard:</strong> shows whether S3 has a known issue in my region.</li><li><strong>Response headers:</strong> <code>x-cache: Hit from cloudfront</code> vs <code>Error from cloudfront</code> tells you whether a file came from the cache or failed at the origin.</li><li><strong>Pipeline smoke test:</strong> the curl of the homepage would fail on the next deploy.</li></ul>',
       steps: [
         { title: 'Confirm the origin is the problem', detail: 'Check the AWS Health Dashboard and try reading an object from the bucket with the AWS CLI. If S3 fails but CloudFront answers, it\'s the origin, not the CDN.',
           log: ['info', 'aws s3 ls on the bucket: timeout. S3 confirmed as the cause.'] },
@@ -385,7 +384,7 @@ document.querySelectorAll('.open-chatbot').forEach(btn => btn.addEventListener('
       ],
       cause: '<p>I push a change to the chatbot Lambda that has a syntax error. My pipeline runs <code>node --check</code> on both Lambda functions before Terraform touches anything, and that check fails.</p>',
       impact: '<p><strong>None.</strong> The Terraform job stops before <code>terraform apply</code>, and the "Deploy Website Files" job never starts because it depends on the Terraform job (<code>needs: terraform</code>). The live site keeps running the last version that passed.</p><p>That\'s the point of running checks before the deploy step: a broken build fails in the pipeline, not in front of visitors.</p>',
-      detect: '<ul><li><strong>GitHub Actions</strong> marks the run as failed and emails me.</li><li><strong>This page:</strong> the deploy status in the header reads the latest run from the GitHub API and switches to "Last deploy failed".</li><li><strong>The step log</strong> points to the exact file and line.</li></ul><p class="sim-note">The limit: <code>node --check</code> only catches syntax errors. A logic bug or a broken <code>index.html</code> would still deploy. My smoke test catches a site that\'s completely down, but only after it\'s live. Next step: unit tests for the Lambdas and a staging environment that gets tested first.</p>',
+      detect: '<ul><li><strong>GitHub Actions</strong> marks the run as failed and emails me.</li><li><strong>This page:</strong> the deploy status in the header reads the latest run from the GitHub API and switches to "Last deploy failed".</li><li><strong>The step log</strong> points to the exact file and line.</li></ul><p class="sim-note">The catch: <code>node --check</code> only catches syntax errors. A logic bug or a broken <code>index.html</code> would still deploy. My smoke test catches a site that\'s completely down, but only after it\'s live. Next step: unit tests for the Lambdas and a staging environment that gets tested first.</p>',
       steps: [
         { title: 'Read the failing step', detail: 'Open the failed run in GitHub Actions and find the step and line that broke.',
           log: ['info', 'Run log: chatbot.js line 42, extra closing brace'] },
@@ -454,7 +453,7 @@ document.querySelectorAll('.open-chatbot').forEach(btn => btn.addEventListener('
       ],
       cause: '<p>The visitor counter Lambda has an IAM role with a policy listing exactly which DynamoDB actions it can use on the table. If a change removes <code>dynamodb:UpdateItem</code> from that policy, the function can still read the count but can\'t increase it.</p><p>This is a different kind of permission problem from the 403 scenario. There, S3\'s <em>bucket policy</em> (attached to the resource) blocked CloudFront. Here, the <em>Lambda role\'s policy</em> (attached to the identity) is missing an action.</p>',
       impact: '<ul><li><strong>The site works.</strong> Pages load from CloudFront and S3, and the chatbot keeps working because it\'s a separate Lambda that doesn\'t use DynamoDB.</li><li><strong>New visitors see "0 site visits".</strong> The function returns a 500, but my front-end doesn\'t check the status code, so it reads the error body and animates to 0 instead of showing "...".</li><li><strong>Returning visitors still see the right number.</strong> Their visit was already recorded today, so the function only reads the count, and reads still work.</li><li><strong>Visits during the outage are lost.</strong> The function records the hashed visitor before trying to increase the count, so those visitors won\'t be counted again until their record expires a day later.</li></ul>',
-      detect: '<ul><li><strong>API Gateway <code>5XXError</code> metric:</strong> the clearest signal, since API Gateway sees the 500s.</li><li><strong>CloudWatch Logs:</strong> the function logs <code>Error: AccessDeniedException</code> with the exact action and role.</li><li><strong>Not Lambda\'s <code>Errors</code> metric:</strong> it stays at 0 because my code catches the error and returns a normal response.</li></ul><p class="sim-note">The honest part: my pipeline\'s smoke test would <strong>not</strong> catch this. It calls the counter with <code>?peek=1</code> so deploys don\'t add fake visits, and that only reads the count. A failure that only breaks writes slips straight past it.</p>',
+      detect: '<ul><li><strong>API Gateway <code>5XXError</code> metric:</strong> the clearest signal, since API Gateway sees the 500s. I have an alarm on it that emails me through SNS.</li><li><strong>CloudWatch Logs:</strong> the function logs <code>Error: AccessDeniedException</code> with the exact action and role.</li><li><strong>Not Lambda\'s <code>Errors</code> metric:</strong> it stays at 0 because my code catches the error and returns a normal response.</li></ul><p class="sim-note">The catch: my pipeline\'s smoke test would <strong>not</strong> catch this. It calls the counter with <code>?peek=1</code> so deploys don\'t add fake visits, and that only reads the count. A failure that only breaks writes slips straight past it.</p>',
       steps: [
         { title: 'Find which part is failing', detail: 'The page loads and the chatbot works, so it\'s the counter API. Calling the endpoint directly returns HTTP 500 with <code>Failed to update visitor count</code>.',
           log: ['info', 'curl /visitor-count: 500. ?peek=1: 200. Reads work, writes fail.'] },
@@ -466,7 +465,7 @@ document.querySelectorAll('.open-chatbot').forEach(btn => btn.addEventListener('
         { title: 'Verify the write path', detail: 'Call the endpoint <em>without</em> <code>?peek=1</code> and confirm the count comes back, then watch API Gateway\'s 5XX metric return to zero.',
           log: ['ok', 'GET /visitor-count: 200 with count. 5XXError back to 0.'] },
       ],
-      next: 'What I\'d add next: check the response status in the front-end so a failure shows "..." instead of 0, an alarm on API Gateway 5XXError, and a smoke test that exercises the write path.',
+      next: 'What I\'d add next: check the response status in the front-end so a failure shows "..." instead of 0, and a smoke test that exercises the write path.',
     },
 
     spike: {
@@ -585,7 +584,7 @@ document.querySelectorAll('.open-chatbot').forEach(btn => btn.addEventListener('
       : `<p class="sim-note">${hint}</p><ol class="sim-steps">${items}</ol><p class="sim-note">${s.next}</p>`;
   }
 
-  // one-line summary next to the Recover button, so you can follow along without scrolling up
+  // status line next to the recover button
   function setFooter(m) {
     const n = SCENARIOS[current].steps.length;
     const pct = v => (Math.round(v * 10) / 10).toFixed(1) + '%';
@@ -634,9 +633,9 @@ document.querySelectorAll('.open-chatbot').forEach(btn => btn.addEventListener('
   function recover() {
     const s = SCENARIOS[current];
     if (!s || step >= s.steps.length) return;
-    // remember where the button is on screen so we can keep it there after the content above changes
+    // keep the button in the same spot on screen
     const btnTop = recoverBtn.getBoundingClientRect().top;
-    // if the failure log is still typing out, finish it first so fix lines come after it
+    // finish the failure log first
     if (step === 0) {
       clearTimers();
       logEl.innerHTML = '';
@@ -647,7 +646,7 @@ document.querySelectorAll('.open-chatbot').forEach(btn => btn.addEventListener('
     const done = step === s.steps.length;
     addLog('fix ' + step, st.log[0], st.log[1]);
 
-    // merge node overrides from every completed step
+    // node changes from finished steps
     let nodes = Object.assign({}, s.nodes);
     s.steps.slice(0, step).forEach(x => Object.assign(nodes, x.nodes || {}));
     if (done) nodes = {};
@@ -675,8 +674,6 @@ document.querySelectorAll('.open-chatbot').forEach(btn => btn.addEventListener('
     }
     tab = 'recover';
     renderTab();
-    // switching to the Recovery tab changes the height of the content above the button.
-    // Shift the page by the same amount, instantly, so the button stays under your finger.
     const shift = recoverBtn.getBoundingClientRect().top - btnTop;
     if (shift) {
       const root = document.documentElement;
@@ -692,12 +689,10 @@ document.querySelectorAll('.open-chatbot').forEach(btn => btn.addEventListener('
     tab = b.dataset.tab;
     renderTab();
   });
-  // move the floating chat button out of the way while the simulator's bottom bar is on screen
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([e]) => {
-      document.body.classList.toggle('sim-footer-in-view', e.isIntersecting);
-    }).observe(footerEl);
-  }
+  // hide chat button when the footer is showing
+  new IntersectionObserver(([e]) => {
+    document.body.classList.toggle('sim-footer-in-view', e.isIntersecting);
+  }).observe(footerEl);
 
   runBtn.addEventListener('click', run);
   recoverBtn.addEventListener('click', recover);

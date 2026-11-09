@@ -17,6 +17,9 @@ I built this project to get hands-on experience with AWS services and learn how 
 * Custom domain
 * HTTPS
 * CloudFront content delivery
+* Automatic deploys with GitHub Actions
+* Mobile friendly design
+* Failure simulator that shows what happens when parts of the site break
 
 ## AWS Services
 
@@ -29,7 +32,8 @@ This project uses several AWS services:
 | **AWS Lambda**         | Runs serverless backend functions   |
 | **Amazon API Gateway** | Handles API requests                |
 | **Amazon DynamoDB**    | Stores application data             |
-| **Amazon SNS**         | Handles notifications               |
+| **Amazon SNS**         | Emails me when an alarm goes off    |
+| **Amazon CloudWatch**  | Alarms for site and API errors      |
 | **Terraform**          | Manages AWS infrastructure as code  |
 
 Cloudflare is also used for DNS and the custom domain.
@@ -45,6 +49,7 @@ Cloudflare is also used for DNS and the custom domain.
 * Amazon API Gateway
 * Amazon DynamoDB
 * Amazon SNS
+* Amazon CloudWatch
 
 ### Infrastructure
 
@@ -76,7 +81,7 @@ Through this project, I gained hands-on experience with:
 * Building serverless functionality with Lambda
 * Creating APIs with API Gateway
 * Working with DynamoDB
-* Using SNS
+* Using SNS and CloudWatch alarms to get alerted when something breaks
 * Managing infrastructure with Terraform
 * Configuring DNS with Cloudflare
 * Working with AWS IAM and permissions
@@ -88,7 +93,7 @@ Through this project, I gained hands-on experience with:
 Some things I may add in the future:
 
 * More cloud projects
-* Improved monitoring and logging
+* More monitoring, like a CloudWatch dashboard
 * Additional infrastructure automation
 * Additional security improvements
 * More serverless functionality

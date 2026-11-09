@@ -26,6 +26,13 @@ variable "environment" {
   type        = string
 }
 
+variable "alert_email" {
+  description = "Email that gets CloudWatch alarm notifications"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
 variable "project_name" {
   description = "Project name for tagging"
   type        = string

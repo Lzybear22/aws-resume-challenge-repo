@@ -213,7 +213,7 @@ body {
   font-family: var(--mono);
   font-weight: 400;
   margin-top: 6px;
-  /* fixed single line so the typewriter never changes the page height */
+  /* stop typewriter from moving the page */
   white-space: nowrap;
   height: 1.25em;
   vertical-align: top;
@@ -1010,7 +1010,7 @@ body {
   line-height: 1.7;
 }
 
-/* FAILURE SIMULATOR */
+/*FAILURE SIMULATOR*/
 .arch-sim-link {
   max-width: 760px;
   margin: 18px auto 0;
@@ -1322,7 +1322,6 @@ body {
 }
 .sim-steps li.is-done .sim-step-num { background: var(--ok); border-color: var(--ok); color: var(--bg-base); font-weight: 700; }
 
-/* button on the left, away from the floating chat button in the bottom-right corner */
 .sim-footer {
   display: flex;
   align-items: center;
@@ -1373,7 +1372,7 @@ body.sim-footer-in-view #chatbot-label {
   .sim-log-level { font-size: 0.68rem; }
 }
 
-/* MOBILE NAV TOGGLE (hidden on desktop) */
+/*MOBILE MENU*/
 .nav-toggle {
   display: none;
   position: relative;
@@ -1400,7 +1399,7 @@ body.sim-footer-in-view #chatbot-label {
 .navbar.menu-open .nav-toggle span:nth-child(2) { opacity: 0; }
 .navbar.menu-open .nav-toggle span:nth-child(3) { top: 15.5px; transform: rotate(-45deg); }
 
-/* Per-node description, only shown in the mobile accordion layout */
+/* arch descriptions (mobile only) */
 .arch-node-desc { display: none; }
 
 /*RESPONSIVE*/
@@ -1463,7 +1462,7 @@ body.sim-footer-in-view #chatbot-label {
   .navbar nav ul li a.active { color: var(--accent); }
 }
 @media (max-width: 600px) {
-  /* shrink a little on narrow phones so "Cloud Engineering Student" fits on one line */
+  /* fit typewriter on one line */
   .hero-role-wrap { font-size: clamp(0.95rem, 5vw, 1.4rem); }
   .skill-grid { grid-template-columns: repeat(3, 1fr); }
   .chatbot-modal {
@@ -1473,18 +1472,17 @@ body.sim-footer-in-view #chatbot-label {
     height: min(520px, calc(100vh - 110px));
     height: min(520px, calc(100dvh - 110px));
   }
-  /* 16px stops iOS Safari from zooming in when the input is focused */
+  /* 16px so iPhone doesn't zoom in */
   #chatbot-input { font-size: 16px; }
   #chatbot-button { bottom: 24px; right: 24px; }
   .chatbot-pulse-ring { bottom: 24px; right: 24px; }
   #chatbot-label { right: 88px; bottom: 37px; }
-  /* once the page is scrolled, hide the label so it doesn't sit on top of text */
   .navbar.fixed-top ~ #chatbot-label { display: none; }
   .project-card { width: 100%; }
   .project-card-inner { padding: 20px 16px; }
   .section-inner { padding: 60px 4%; }
 
-  /* Architecture: vertical list, tap a service to expand its description */
+  /* arch diagram as a list */
   .arch-subtitle { margin-bottom: 20px; }
   .arch-diagram {
     display: flex;
